@@ -1,5 +1,9 @@
 'use strict';
 
+const MOVIE_COUNT = 5;
+const TOP_MOVIE_COUNT = 2;
+const COMMENTED_MOVIE_COUNT = 2;
+
 const createUserProfileTemplate = () => {
   return (
     `<section class="header__profile profile">
@@ -260,6 +264,12 @@ const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
+const repeatRender = (container, template, place, iterations) => {
+  for (let i = 0; i < iterations; i++) {
+    render(container, template, place);
+  }
+};
+
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
@@ -272,20 +282,11 @@ const movieListElement = document.querySelector(`.films-list .films-list__contai
 const topMovieListElement = document.querySelector(`.films-list--top .films-list__container`);
 const commentedMovieListElement = document.querySelector(`.films-list--commented .films-list__container`);
 
-for (let i = 0; i < 5; i++) {
-  render(movieListElement, createMovieCardTemplate(), `beforeend`);
-}
-
+repeatRender(movieListElement, createMovieCardTemplate(), `beforeend`, MOVIE_COUNT);
 render(movieListElement, createShowMoreButtonTemplate(), `afterend`);
-
-for (let i = 0; i < 2; i++) {
-  render(topMovieListElement, createMovieCardTemplate(), `beforeend`);
-}
-
-for (let i = 0; i < 2; i++) {
-  render(commentedMovieListElement, createMovieCardTemplate(), `beforeend`);
-}
+repeatRender(topMovieListElement, createMovieCardTemplate(), `beforeend`, TOP_MOVIE_COUNT);
+repeatRender(commentedMovieListElement, createMovieCardTemplate(), `beforeend`, COMMENTED_MOVIE_COUNT);
 
 const bodyElement = document.querySelector(`body`);
 
-render(bodyElement, createModalTemplate(), `beforeend`);
+// render(bodyElement, createModalTemplate(), `beforeend`);
