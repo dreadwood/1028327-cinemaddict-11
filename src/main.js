@@ -289,4 +289,4 @@ repeatRender(commentedMovieListElement, createMovieCardTemplate(), `beforeend`, 
 
 const bodyElement = document.querySelector(`body`);
 
-// render(bodyElement, createModalTemplate(), `beforeend`);
+render(bodyElement, createModalTemplate(), `beforeend`);
