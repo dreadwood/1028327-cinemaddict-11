@@ -1,4 +1,67 @@
-import {MONTH_NAMES} from "../const.js";
+import {MONTH_NAMES, EMOJIS} from "../const.js";
+import {generationComments} from "../mock/comment.js";
+
+const COMMENT_COUNT = 4;
+const comments = generationComments(COMMENT_COUNT);
+
+const createCommentMarkup = (comment) => {
+  const {emoji, text, author, date} = comment;
+  const dateComment = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : `0` + date.getMinutes()}`;
+
+  return (
+    `<li class="film-details__comment">
+      <span class="film-details__comment-emoji">
+        <img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">
+      </span>
+      <div>
+        <p class="film-details__comment-text">${text}</p>
+        <p class="film-details__comment-info">
+          <span class="film-details__comment-author">${author}</span>
+          <span class="film-details__comment-day">${dateComment}</span>
+          <button class="film-details__comment-delete">Delete</button>
+        </p>
+      </div>
+    </li>`
+  );
+};
+
+const createEmojiListMarkup = (emoji) => {
+  return (
+    `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
+    <label class="film-details__emoji-label" for="emoji-${emoji}">
+      <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
+    </label>`
+  );
+};
+
+
+const createCommentTemplate = (item) => {
+  const commentCount = item.length;
+  const commentMarkup = item.map((it) => createCommentMarkup(it)).join(`\n`);
+  const emojiListMarkup = EMOJIS.map((it) => createEmojiListMarkup(it)).join(`\n`);
+
+  return (
+    `<section class="film-details__comments-wrap">
+      <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentCount}</span></h3>
+
+      <ul class="film-details__comments-list">
+        ${commentMarkup}
+      </ul>
+
+      <div class="film-details__new-comment">
+        <div for="add-emoji" class="film-details__add-emoji-label"></div>
+
+        <label class="film-details__comment-label">
+          <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+        </label>
+
+        <div class="film-details__emoji-list">
+          ${emojiListMarkup}
+        </div>
+      </div>
+    </section>`
+  );
+};
 
 export const createModalTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
@@ -6,16 +69,7 @@ export const createModalTemplate = (movie) => {
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
   const durationInHours = `${duration > 60 ? Math.floor(duration / 60) + `h ` : ``}${duration % 60}m`;
   const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
-
-  // Данные комментариев
-  const emoji = [
-    `./images/emoji/smile.png`,
-    `./images/emoji/sleeping.png`,
-    `./images/emoji/puke.png`,
-    `./images/emoji/angry.png`];
-  const text = [`Interesting setting and a good cast`, `Booooooooooring`, `Very very old. Meh`, `Almost two hours? Seriously?`];
-  const author = [`Tim Macoveev`, `John Doe`, `John Doe`, `John Doe`];
-  const dateComment = [`2019/12/31 23:59`, `2 days ago`, `2 days ago`, `Today`];
+  const commentTemplate = createCommentTemplate(comments);
 
   return (
     `<section class="film-details">
@@ -94,94 +148,7 @@ export const createModalTemplate = (movie) => {
         </div>
 
         <div class="form-details__bottom-container">
-          <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
-
-            <ul class="film-details__comments-list">
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="${emoji[0]}" width="55" height="55" alt="emoji-smile">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${text[0]}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${author[0]}</span>
-                    <span class="film-details__comment-day">${dateComment[0]}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="${emoji[1]}" width="55" height="55" alt="emoji-sleeping">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${text[1]}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${author[1]}</span>
-                    <span class="film-details__comment-day">${dateComment[1]}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="${emoji[2]}" width="55" height="55" alt="emoji-puke">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${text[2]}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${author[2]}</span>
-                    <span class="film-details__comment-day">${dateComment[2]}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="${emoji[3]}" width="55" height="55" alt="emoji-angry">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${text[3]}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${author[3]}</span>
-                    <span class="film-details__comment-day">${dateComment[3]}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-            </ul>
-
-            <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
-
-              <label class="film-details__comment-label">
-                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-              </label>
-
-              <div class="film-details__emoji-list">
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-                <label class="film-details__emoji-label" for="emoji-smile">
-                  <img src="${emoji[0]}" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-                <label class="film-details__emoji-label" for="emoji-sleeping">
-                  <img src="${emoji[1]}" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-                <label class="film-details__emoji-label" for="emoji-puke">
-                  <img src="${emoji[2]}" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-                <label class="film-details__emoji-label" for="emoji-angry">
-                  <img src="${emoji[3]}" width="30" height="30" alt="emoji">
-                </label>
-              </div>
-            </div>
-          </section>
+          ${commentTemplate}
         </div>
       </form>
     </section>`

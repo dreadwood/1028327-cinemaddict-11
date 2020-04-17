@@ -1,4 +1,4 @@
-export const MONTH_NAMES = [
+const MONTH_NAMES = [
   `January`,
   `February`,
   `March`,
@@ -12,3 +12,7 @@ export const MONTH_NAMES = [
   `November`,
   `December`,
 ];
+
+const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
+
+export {MONTH_NAMES, EMOJIS};
