@@ -1,23 +1,11 @@
-export const createModalTemplate = () => {
-  // Данные фильма
-  const poster = `./images/posters/the-great-flamarion.jpg`;
-  const contentRating = 18;
-  const title = `The Great Flamarion`;
-  const originTitle = `The Great Flamarion`;
-  const rating = 8.9;
-  const director = `Anthony Mann`;
-  const writers = `Anne Wigton, Heinz Herald, Richard Weil`;
-  const actors = `Erich von Stroheim, Mary Beth Hughes, Dan Duryea`;
-  const date = `30 March 1945`;
-  const duration = `1h 59m`;
-  const country = `USA`;
-  const genres = [`Drama`, `Film-Noir`, `Mystery`]; // add change name
-  const description = `The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim) is an arrogant, friendless, and misogynous marksman who displays his trick gunshot act in the vaudeville circuit. His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated by her into killing her no good husband during one of their acts.`;
-  const onWatchlist = false;
-  const isWatched = false;
-  const onFavorite = false;
+import {MONTH_NAMES} from "../const.js";
+
+export const createModalTemplate = (movie) => {
+  const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
+  const durationInHours = `${duration > 60 ? Math.floor(duration / 60) + `h ` : ``}${duration % 60}m`;
+  const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 
   // Данные комментариев
   const emoji = [
@@ -38,7 +26,7 @@ export const createModalTemplate = () => {
           </div>
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
-              <img class="film-details__poster-img" src="${poster}" alt="film poster ${title}">
+              <img class="film-details__poster-img" src="./images/posters/${poster}" alt="film poster ${title}">
 
               <p class="film-details__age">${contentRating}+</p>
             </div>
@@ -70,11 +58,11 @@ export const createModalTemplate = () => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${date}</td>
+                  <td class="film-details__cell">${releaseDate}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${duration}</td>
+                  <td class="film-details__cell">${durationInHours}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
