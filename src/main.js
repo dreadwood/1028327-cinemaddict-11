@@ -11,6 +11,8 @@ import {generateMovies} from "./mock/movie.js";
 const MOVIE_COUNT = 18;
 const TOP_MOVIE_COUNT = 2;
 const COMMENTED_MOVIE_COUNT = 2;
+const MOVIE_COUNT_ON_START = 5;
+const MOVIE_COUNT_BY_BUTTON = 5;
 
 const movies = generateMovies(MOVIE_COUNT);
 
@@ -32,15 +34,33 @@ render(mainElement, createNavigationTemplate(), `beforeend`);
 render(mainElement, createSortingTemplate(), `beforeend`);
 render(mainElement, createMovieContainerTemplate(), `beforeend`);
 
-const movieListElement = document.querySelector(`.films-list .films-list__container`);
+const movieListElement = document.querySelector(`.films-list`);
+const movieListContainerElement = movieListElement.querySelector(`.films-list__container`);
 const topMovieListElement = document.querySelector(`.films-list--top .films-list__container`);
 const commentedMovieListElement = document.querySelector(`.films-list--commented .films-list__container`);
 
-for (const movie of movies) {
-  render(movieListElement, createMovieCardTemplate(movie), `beforeend`);
-}
+let showingMovieCount = MOVIE_COUNT_ON_START;
+movies.slice(0, showingMovieCount).forEach((movie) => {
+  render(movieListContainerElement, createMovieCardTemplate(movie), `beforeend`);
+});
 
-render(movieListElement, createShowMoreButtonTemplate(), `afterend`);
+render(movieListElement, createShowMoreButtonTemplate(), `beforeend`); // туть
+const showMoreButton = movieListElement.querySelector(`.films-list__show-more`);
+
+showMoreButton.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+  const prevMovieCount = showingMovieCount;
+  showingMovieCount += MOVIE_COUNT_BY_BUTTON;
+
+  movies.slice(prevMovieCount, showingMovieCount).forEach((movie) => {
+    render(movieListContainerElement, createMovieCardTemplate(movie), `beforeend`);
+  });
+
+  if (showingMovieCount >= movies.length) {
+    showMoreButton.remove();
+  }
+});
+
 repeatRender(topMovieListElement, createMovieCardTemplate(movies[10]), `beforeend`, TOP_MOVIE_COUNT);
 repeatRender(commentedMovieListElement, createMovieCardTemplate(movies[6]), `beforeend`, COMMENTED_MOVIE_COUNT);
 
