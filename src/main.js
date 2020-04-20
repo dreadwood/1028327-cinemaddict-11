@@ -5,6 +5,7 @@ import {createMovieContainerTemplate} from './components/movie-container.js';
 import {createMovieCardTemplate} from './components/movie-card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createModalTemplate} from './components/modal.js';
+import {createMovieCountInfoTemplate} from './components/movie-count-info.js'
 
 import {generateMovies} from "./mock/movie.js";
 
@@ -64,6 +65,10 @@ showMoreButton.addEventListener(`click`, (evt) => {
 repeatRender(topMovieListElement, createMovieCardTemplate(movies[10]), `beforeend`, TOP_MOVIE_COUNT);
 repeatRender(commentedMovieListElement, createMovieCardTemplate(movies[6]), `beforeend`, COMMENTED_MOVIE_COUNT);
 
-const bodyElement = document.querySelector(`body`);
+const footerStatisticsElement = document.querySelector(`.footer__statistics`);
+render(footerStatisticsElement, createMovieCountInfoTemplate(), `beforeend`);
 
-render(bodyElement, createModalTemplate(movies[3]), `beforeend`);
+const bodyElement = document.querySelector(`body`);
+render(bodyElement, createModalTemplate(movies[0]), `beforeend`);
+
+
