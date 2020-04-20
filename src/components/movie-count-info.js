@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from '../utils.js'
+import {getRandomIntegerNumber} from '../utils.js';
 
 export const createMovieCountInfoTemplate = () => {
   return (

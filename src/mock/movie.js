@@ -74,6 +74,7 @@ const generationMovie = () => {
     onWatchlist: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     onFavorite: Math.random() > 0.5,
+    comments: getRandomIntegerNumber(0, 99),
   };
 };
 
