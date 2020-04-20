@@ -5,8 +5,9 @@ import {createMovieContainerTemplate} from './components/movie-container.js';
 import {createMovieCardTemplate} from './components/movie-card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createModalTemplate} from './components/modal.js';
-import {createMovieCountInfoTemplate} from './components/movie-count-info.js'
+import {createMovieCountInfoTemplate} from './components/movie-count-info.js';
 
+import {countMovies} from './count-movies.js';
 import {generateMovies} from "./mock/movie.js";
 
 const MOVIE_COUNT = 18;
@@ -16,6 +17,7 @@ const MOVIE_COUNT_ON_START = 5;
 const MOVIE_COUNT_BY_BUTTON = 5;
 
 const movies = generateMovies(MOVIE_COUNT);
+const quantity = countMovies(movies);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -31,7 +33,7 @@ const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
 render(headerElement, createUserProfileTemplate(), `beforeend`);
-render(mainElement, createNavigationTemplate(), `beforeend`);
+render(mainElement, createNavigationTemplate(quantity), `beforeend`);
 render(mainElement, createSortingTemplate(), `beforeend`);
 render(mainElement, createMovieContainerTemplate(), `beforeend`);
 
@@ -70,5 +72,3 @@ render(footerStatisticsElement, createMovieCountInfoTemplate(), `beforeend`);
 
 const bodyElement = document.querySelector(`body`);
 render(bodyElement, createModalTemplate(movies[0]), `beforeend`);
-
-
