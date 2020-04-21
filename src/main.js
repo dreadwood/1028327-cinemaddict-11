@@ -72,4 +72,4 @@ filmCountInfoElement.textContent = `${getRandomInteger(1, 130)} ${getRandomInteg
 footerStatisticsElement.appendChild(filmCountInfoElement);
 
 const bodyElement = document.querySelector(`body`);
-// render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
+render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);

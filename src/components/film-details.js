@@ -92,6 +92,16 @@ const createCommentTemplate = (comment) => {
   );
 };
 
+const createFilmTableRowlMarkup = (row) => {
+  const [term, value] = row;
+  return (
+    `<tr class="film-details__row">
+      <td class="film-details__term">${term}</td>
+      <td class="film-details__cell">${value}</td>
+    </tr>`
+  );
+};
+
 export const createFilmDetailsTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
@@ -99,6 +109,18 @@ export const createFilmDetailsTemplate = (movie) => {
   const durationInHours = `${duration > 60 ? Math.floor(duration / 60) + `h ` : ``}${duration % 60}m`;
   const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   const commentTemplate = createCommentTemplate(Comments);
+
+  const genreTerm = genres.length === 1 ? `Genre` : `Genres`;
+  const genreValue = createGenreTemplate(genres);
+  const filmTable = [
+    [`Director`, director],
+    [`Writers`, writers],
+    [`Actors`, actors],
+    [`Release Date`, releaseDate],
+    [`Runtime`, durationInHours],
+    [`Country`, country],
+    [genreTerm, genreValue],
+  ];
 
   return (
     `<section class="film-details">
@@ -127,36 +149,7 @@ export const createFilmDetailsTemplate = (movie) => {
               </div>
 
               <table class="film-details__table">
-                <tr class="film-details__row">
-                  <td class="film-details__term">Director</td>
-                  <td class="film-details__cell">${director}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${writers}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${actors}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${releaseDate}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${durationInHours}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${country}</td>
-                </tr>
-                <tr class="film-details__row">
-                  <td class="film-details__term">${genres.length === 1 ? `Genre` : `Genres`}</td>
-                  <td class="film-details__cell">
-                    ${createGenreTemplate(genres)}
-                  </td>
-                </tr>
+                ${filmTable.map((row) => createFilmTableRowlMarkup(row)).join(`\n`)}
               </table>
 
               <p class="film-details__film-description">${description}</p>
