@@ -1,12 +1,16 @@
+const createFilmButtonMarkup = (filmButton, isActive) => {
+  const [type, name] = filmButton;
+  return (
+    `<button class="film-card__controls-item button film-card__controls-item--${type} ${isActive ? `film-card__controls-item--active` : ``}">${name}</button>`
+  );
+};
+
 export const createFilmCardTemplate = (movie) => {
   const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
   const year = date.getDate();
   const descriptionForInsertion = description.length > 140 ? (description.substring(0, 139) + `...`) : description;
-  const watchlistButtonActiveClass = onWatchlist ? `film-card__controls-item--active` : ``;
-  const watchedButtonActiveClass = isWatched ? `film-card__controls-item--active` : ``;
-  const favoriteButtonActiveClass = onFavorite ? `film-card__controls-item--active` : ``;
 
   return (
     `<article class="film-card">
@@ -21,9 +25,9 @@ export const createFilmCardTemplate = (movie) => {
       <p class="film-card__description">${descriptionForInsertion}</p>
       <a class="film-card__comments">${comments} comments</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${watchlistButtonActiveClass}">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched  ${watchedButtonActiveClass}">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite ${favoriteButtonActiveClass}">Mark as favorite</button>
+        ${createFilmButtonMarkup([`add-to-watchlist`, `Add to watchlist`], onWatchlist)}
+        ${createFilmButtonMarkup([`mark-as-watched`, `Mark as watched`], isWatched)}
+        ${createFilmButtonMarkup([`favorite`, `Mark as favorite`], onFavorite)}
       </form>
     </article>`
   );
