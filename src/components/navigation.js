@@ -1,3 +1,10 @@
+const navItems = new Map([
+  [`all`, `All movies`],
+  [`watchlist`, `Watchlist`],
+  [`history`, `History`],
+  [`favorites`, `Favorites`],
+]);
+
 const createNavigationMarkup = (id, name, count, isAll) => {
   return (
     `<a href="#${id}" class="main-navigation__item ${isAll ? `main-navigation__item--active` : ``}">
@@ -7,13 +14,6 @@ const createNavigationMarkup = (id, name, count, isAll) => {
 };
 
 export const createNavigationTemplate = (quantity) => {
-  const navItems = new Map([
-    [`all`, `All movies`],
-    [`watchlist`, `Watchlist`],
-    [`history`, `History`],
-    [`favorites`, `Favorites`],
-  ]);
-
   let navigationMarkup = ``;
   navItems.forEach((name, id) => {
     const count = quantity[id] ? quantity[id] : ``;
