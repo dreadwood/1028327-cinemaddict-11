@@ -1,8 +1,37 @@
 import {MONTH_NAMES, EMOJIS} from "../const.js";
-import {generateComments} from "../mock/comment.js";
+import {getRandomDate} from "../utils.js";
 
-const COMMENT_COUNT = 4;
-const comments = generateComments(COMMENT_COUNT);
+const createGenreTemplate = (genres) => {
+  return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
+};
+
+const Comments = [
+  {
+    emoji: `smile`,
+    text: `Interesting setting and a good cast`,
+    author: `Tim Macoveev`,
+    date: getRandomDate(2010, 2019),
+  },
+  {
+    emoji: `sleeping`,
+    text: `Booooooooooring`,
+    author: `John Doe`,
+    date: getRandomDate(2010, 2019),
+  },
+  {
+    emoji: `puke`,
+    text: `Very very old. Meh`,
+    author: `John Doe`,
+    date: getRandomDate(2010, 2019),
+  },
+  {
+    emoji: `angry`,
+    text: `Almost two hours? Seriously?`,
+    author: `John Doe`,
+    date: getRandomDate(2010, 2019),
+  }
+];
+
 
 const createCommentMarkup = (comment) => {
   const {emoji, text, author, date} = comment;
@@ -69,7 +98,7 @@ export const createFilmDetailsTemplate = (movie) => {
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
   const durationInHours = `${duration > 60 ? Math.floor(duration / 60) + `h ` : ``}${duration % 60}m`;
   const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
-  const commentTemplate = createCommentTemplate(comments);
+  const commentTemplate = createCommentTemplate(Comments);
 
   return (
     `<section class="film-details">
@@ -125,9 +154,8 @@ export const createFilmDetailsTemplate = (movie) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">${genres.length === 1 ? `Genre` : `Genres`}</td>
                   <td class="film-details__cell">
-                    <span class="film-details__genre">${genres[0]}</span>
-                    <span class="film-details__genre">${genres[1]}</span>
-                    <span class="film-details__genre">${genres[2]}</span></td>
+                    ${createGenreTemplate(genres)}
+                  </td>
                 </tr>
               </table>
 
