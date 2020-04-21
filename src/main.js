@@ -6,8 +6,7 @@ import {createFilmCardTemplate} from './components/film-card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createFilmDetailsTemplate} from './components/film-details.js';
 
-import {getRandomInteger} from './utils.js';
-import {countFilms} from './count-films.js';
+import {getRandomInteger, countFilms} from './utils.js';
 import {generateFilms} from "./mock/film.js";
 
 const FILM_COUNT = 18;
