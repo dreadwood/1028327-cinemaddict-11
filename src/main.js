@@ -5,8 +5,8 @@ import {createFilmContainerTemplate} from './components/film-container.js';
 import {createFilmCardTemplate} from './components/film-card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createFilmDetailsTemplate} from './components/film-details.js';
-import {createFilmCountInfoTemplate} from './components/film-count-info.js';
 
+import {getRandomInteger} from './utils.js';
 import {countFilms} from './count-films.js';
 import {generateFilms} from "./mock/film.js";
 
@@ -68,7 +68,9 @@ repeatRender(topFilmListElement, createFilmCardTemplate(films[10]), `beforeend`,
 repeatRender(commentedFilmListElement, createFilmCardTemplate(films[6]), `beforeend`, COMMENTED_FILM_COUNT);
 
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
-render(footerStatisticsElement, createFilmCountInfoTemplate(), `beforeend`);
+const filmCountInfoElement = document.createElement(`p`);
+filmCountInfoElement.textContent = `${getRandomInteger(1, 130)} ${getRandomInteger(100, 999)} movies inside`;
+footerStatisticsElement.appendChild(filmCountInfoElement);
 
 const bodyElement = document.querySelector(`body`);
-render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
+// render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
