@@ -1,13 +1,13 @@
-const getRandomIntegerNumber = (min, max) => {
+const getRandomInteger = (min = 0, max = Number.MAX_SAFE_INTEGER) => {
   return min + Math.floor(Math.random() * (max - min));
 };
 
-const getRandomRationalNumber = (min, max) => {
-  return getRandomIntegerNumber(min, max) + Math.floor(Math.random() * 10) / 10;
+const getRandomRational = (min, max) => {
+  return getRandomInteger(min, max) + Math.floor(Math.random() * 10) / 10;
 };
 
 const getRandomArrayItem = (array) => {
-  const randomIndex = getRandomIntegerNumber(0, array.length);
+  const randomIndex = getRandomInteger(0, array.length);
 
   return array[randomIndex];
 };
@@ -32,4 +32,4 @@ const getRandomDate = (minYear, maxYear) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
-export {getRandomIntegerNumber, getRandomRationalNumber, getRandomArrayItem,getArrayRandomItems, getRandomDate};
+export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate};

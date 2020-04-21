@@ -1,6 +1,6 @@
-import {getRandomIntegerNumber, getRandomRationalNumber, getRandomArrayItem, getArrayRandomItems, getRandomDate} from "../utils.js";
+import {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate} from "../utils.js";
 
-const MovieTitles = [
+const FILM_TITLES = [
   {
     localName: `Человек с золотой рукой`,
     originName: `The Man with the Golden Arm`,
@@ -50,38 +50,38 @@ const getDescription = (text) => {
     }
     return sentance;
   });
-  const sentenceCount = getRandomIntegerNumber(1, 5);
+  const sentenceCount = getRandomInteger(1, 5);
   return getArrayRandomItems(arraySentences, sentenceCount).join(` `);
 };
 
-const generationMovie = () => {
-  const movie = getRandomArrayItem(MovieTitles);
+const generationFilm = () => {
+  const movie = getRandomArrayItem(FILM_TITLES);
 
   return {
     title: movie.localName,
     originTitle: movie.originName,
     country: getRandomArrayItem(CountryItems),
-    rating: getRandomRationalNumber(1, 10),
+    rating: getRandomRational(1, 10),
     contentRating: getRandomArrayItem(ContentRatingItems),
     date: getRandomDate(1936, 1987),
     director: getRandomArrayItem(Directors),
     writers: getArrayRandomItems(Writers, 3).join(`, `),
     actors: getArrayRandomItems(Actors, 3).join(`, `),
-    duration: getRandomIntegerNumber(16, 119),
+    duration: getRandomInteger(16, 119),
     genres: getArrayRandomItems(GenresTypes, 3),
     poster: getRandomArrayItem(Posters),
     description: getDescription(textForDescription),
     onWatchlist: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     onFavorite: Math.random() > 0.5,
-    comments: getRandomIntegerNumber(0, 99),
+    comments: getRandomInteger(0, 99),
   };
 };
 
-const generateMovies = (count) => {
+const generateFilms = (count) => {
   return new Array(count)
     .fill(``)
-    .map(generationMovie);
+    .map(generationFilm);
 };
 
-export {generateMovies};
+export {generateFilms};

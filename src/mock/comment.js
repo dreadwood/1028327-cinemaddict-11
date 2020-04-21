@@ -13,10 +13,10 @@ const generationComment = () => {
   };
 };
 
-const generationComments = (count) => {
+const generateComments = (count) => {
   return new Array(count)
     .fill(``)
     .map(generationComment);
 };
 
-export {generationComments};
+export {generateComments};

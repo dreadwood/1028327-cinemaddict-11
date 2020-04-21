@@ -1,4 +1,4 @@
-export const createMovieCardTemplate = (movie) => {
+export const createFilmCardTemplate = (movie) => {
   const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;

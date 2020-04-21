@@ -1,8 +1,8 @@
 import {MONTH_NAMES, EMOJIS} from "../const.js";
-import {generationComments} from "../mock/comment.js";
+import {generateComments} from "../mock/comment.js";
 
 const COMMENT_COUNT = 4;
-const comments = generationComments(COMMENT_COUNT);
+const comments = generateComments(COMMENT_COUNT);
 
 const createCommentMarkup = (comment) => {
   const {emoji, text, author, date} = comment;
@@ -25,7 +25,7 @@ const createCommentMarkup = (comment) => {
   );
 };
 
-const createEmojiListMarkup = (emoji) => {
+const createEmojiMarkup = (emoji) => {
   return (
     `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
@@ -35,10 +35,10 @@ const createEmojiListMarkup = (emoji) => {
 };
 
 
-const createCommentTemplate = (item) => {
-  const commentCount = item.length;
-  const commentMarkup = item.map((it) => createCommentMarkup(it)).join(`\n`);
-  const emojiListMarkup = EMOJIS.map((it) => createEmojiListMarkup(it)).join(`\n`);
+const createCommentTemplate = (comment) => {
+  const commentCount = comment.length;
+  const commentMarkup = comment.map((it) => createCommentMarkup(it)).join(`\n`);
+  const emojiListMarkup = EMOJIS.map((it) => createEmojiMarkup(it)).join(`\n`);
 
   return (
     `<section class="film-details__comments-wrap">
@@ -63,7 +63,7 @@ const createCommentTemplate = (item) => {
   );
 };
 
-export const createModalTemplate = (movie) => {
+export const createFilmDetailsTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
