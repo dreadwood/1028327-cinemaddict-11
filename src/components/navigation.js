@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import {createElement} from '../utils/utils.js';
 
 const navItems = new Map([
   [`all`, `All movies`],
@@ -44,7 +44,7 @@ export default class Navigation {
 
   getElement() {
     if (!this._element) {
-      this._element = createElement(this.getElement());
+      this._element = createElement(this.getTemplate());
     }
 
     return this._element;

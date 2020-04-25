@@ -1,6 +1,6 @@
 import {MONTH_NAMES, EMOJIS} from '../const.js';
-import {getRandomDate} from '../utils.js';
-import {createElement} from '../utils.js';
+import {getRatingForInsertion, getdurationInHours, getRandomDate} from '../utils/film-utils.js';
+import {createElement} from '../utils/utils.js';
 
 const createGenreTemplate = (genres) => {
   return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
@@ -104,8 +104,7 @@ const createFilmTableRowlMarkup = (row) => {
 const createFilmDetailsTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
-  const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
-  const durationInHours = `${duration > 60 ? Math.floor(duration / 60) + `h ` : ``}${duration % 60}m`;
+  const durationInHours = getdurationInHours(duration);
   const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   const commentTemplate = createCommentTemplate(Comments);
 
@@ -143,7 +142,7 @@ const createFilmDetailsTemplate = (movie) => {
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${ratingForInsertion}</p>
+                  <p class="film-details__total-rating">${getRatingForInsertion(rating)}</p>
                 </div>
               </div>
 

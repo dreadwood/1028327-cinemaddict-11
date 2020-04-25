@@ -30,29 +30,6 @@ const getArrayRandomItems = (array, count) => {
   return newArray;
 };
 
-const getRandomDate = (minYear, maxYear) => {
-  const start = new Date(minYear, 0);
-  const end = new Date(maxYear, 0);
-
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-};
-
-const countFilms = (movies) => {
-  const quantity = {
-    history: 0,
-    favorites: 0,
-    watchlist: 0,
-  };
-
-  movies.forEach((movie) => {
-    quantity.watchlist += movie.isWatched ? 1 : 0;
-    quantity.favorites += movie.onFavorite ? 1 : 0;
-    quantity.history += movie.onWatchlist ? 1 : 0;
-  });
-
-  return quantity;
-};
-
 const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
@@ -71,4 +48,4 @@ const render = (container, element, place = RenderPosition.BEFOR_END) => {
   }
 };
 
-export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate, countFilms, createElement, RenderPosition, render};
+export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, createElement, RenderPosition, render};

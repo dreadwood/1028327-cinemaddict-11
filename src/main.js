@@ -6,7 +6,8 @@ import FilmCard from './components/film-card.js';
 import ShowMoreButton from './components/show-more-button.js';
 import FilmDetails from './components/film-details.js';
 
-import {getRandomInteger, countFilms, render} from './utils.js';
+import {getRandomInteger, render} from './utils/utils.js';
+import {countFilms} from './utils/film-utils.js';
 import {generateFilms} from "./mock/film.js";
 
 const FILM_COUNT = 18;
@@ -70,4 +71,4 @@ filmCountInfoElement.textContent = `${getRandomInteger(1, 130)} ${getRandomInteg
 footerStatisticsElement.appendChild(filmCountInfoElement);
 
 const bodyElement = document.querySelector(`body`);
-render(bodyElement, new FilmDetails(films[10]).getElement());
+// render(bodyElement, new FilmDetails(films[10]).getElement());

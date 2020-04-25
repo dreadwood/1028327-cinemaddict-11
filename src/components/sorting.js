@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import {createElement} from '../utils/utils.js';
 
 const sortTypes = [`Sort by default`, `Sort by date`, `Sort by rating`];
 
