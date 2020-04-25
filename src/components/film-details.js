@@ -1,5 +1,6 @@
-import {MONTH_NAMES, EMOJIS} from "../const.js";
-import {getRandomDate} from "../utils.js";
+import {MONTH_NAMES, EMOJIS} from '../const.js';
+import {getRandomDate} from '../utils.js';
+import {createElement} from '../utils.js';
 
 const createGenreTemplate = (genres) => {
   return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
@@ -32,7 +33,6 @@ const Comments = [
   }
 ];
 
-
 const createCommentMarkup = (comment) => {
   const {emoji, text, author, date} = comment;
   const dateComment = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : `0` + date.getMinutes()}`;
@@ -62,7 +62,6 @@ const createEmojiMarkup = (emoji) => {
     </label>`
   );
 };
-
 
 const createCommentTemplate = (comment) => {
   const commentCount = comment.length;
@@ -102,7 +101,7 @@ const createFilmTableRowlMarkup = (row) => {
   );
 };
 
-export const createFilmDetailsTemplate = (movie) => {
+const createFilmDetailsTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
@@ -175,3 +174,26 @@ export const createFilmDetailsTemplate = (movie) => {
     </section>`
   );
 };
+
+export default class FilmDetails {
+  constructor(movie) {
+    this._movie = movie;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._movie);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

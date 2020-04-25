@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const navItems = new Map([
   [`all`, `All movies`],
   [`watchlist`, `Watchlist`],
@@ -13,7 +15,7 @@ const createNavigationMarkup = (id, name, count, isAll) => {
   );
 };
 
-export const createNavigationTemplate = (quantity) => {
+const createNavigationTemplate = (quantity) => {
   let navigationMarkup = ``;
   navItems.forEach((name, id) => {
     const count = quantity[id] ? quantity[id] : ``;
@@ -29,3 +31,26 @@ export const createNavigationTemplate = (quantity) => {
     </nav>`
   );
 };
+
+export default class Navigation {
+  constructor(quantity) {
+    this._quantity = quantity;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createNavigationTemplate(this._quantity);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getElement());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

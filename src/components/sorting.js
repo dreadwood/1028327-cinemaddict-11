@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const sortTypes = [`Sort by default`, `Sort by date`, `Sort by rating`];
 
 const createSortingMarkup = (type, isActive) => {
@@ -6,7 +8,7 @@ const createSortingMarkup = (type, isActive) => {
   );
 };
 
-export const createSortingTemplate = () => {
+const createSortingTemplate = () => {
   const sortingMarkup = sortTypes.map((it, i) => createSortingMarkup(it, i === 0)).join(`\n`);
 
   return (
@@ -15,3 +17,25 @@ export const createSortingTemplate = () => {
     </ul>`
   );
 };
+
+export default class Sorting {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSortingTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

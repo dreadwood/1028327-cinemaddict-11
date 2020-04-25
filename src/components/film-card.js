@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createFilmButtonMarkup = (filmButton, isActive) => {
   const [type, name] = filmButton;
   return (
@@ -5,7 +7,7 @@ const createFilmButtonMarkup = (filmButton, isActive) => {
   );
 };
 
-export const createFilmCardTemplate = (movie) => {
+const createFilmCardTemplate = (movie) => {
   const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = movie;
 
   const ratingForInsertion = rating % 1 ? rating : rating + `.0`;
@@ -32,3 +34,26 @@ export const createFilmCardTemplate = (movie) => {
     </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(movie) {
+    this._movie = movie;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._movie);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
