@@ -1,3 +1,8 @@
+const RenderPosition = {
+  AFTER_BEGIN: `afterbegin`,
+  BEFOR_END: `beforeend`,
+};
+
 const getRandomInteger = (min = 0, max = Number.MAX_SAFE_INTEGER) => {
   return min + Math.floor(Math.random() * (max - min));
 };
@@ -55,4 +60,15 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate, countFilms, createElement};
+const render = (container, element, place = RenderPosition.BEFOR_END) => {
+  switch (place) {
+    case RenderPosition.AFTER_BEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOR_END:
+      container.append(element);
+      break;
+  }
+};
+
+export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate, countFilms, createElement, RenderPosition, render};
