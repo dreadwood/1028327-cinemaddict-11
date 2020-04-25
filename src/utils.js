@@ -48,4 +48,11 @@ const countFilms = (movies) => {
   return quantity;
 };
 
-export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate, countFilms};
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems, getRandomDate, countFilms, createElement};
