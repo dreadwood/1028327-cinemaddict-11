@@ -27,4 +27,6 @@ const countFilms = (movies) => {
   return quantity;
 };
 
-export {getRatingForInsertion, getdurationInHours, getRandomDate, countFilms};
+const getSortedFilms = (movies, sortType) => movies.slice().sort((a, b) => b[sortType] - a[sortType]);
+
+export {getRatingForInsertion, getdurationInHours, getRandomDate, countFilms, getSortedFilms};

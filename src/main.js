@@ -7,7 +7,7 @@ import ShowMoreButton from './components/show-more-button.js';
 import FilmDetails from './components/film-details.js';
 
 import {getRandomInteger, render} from './utils/utils.js';
-import {countFilms} from './utils/film-utils.js';
+import {countFilms, getSortedFilms} from './utils/film-utils.js';
 import {generateFilms} from "./mock/film.js";
 
 const FILM_COUNT = 18;
@@ -15,6 +15,11 @@ const TOP_FILM_COUNT = 2;
 const COMMENTED_FILM_COUNT = 2;
 const FILM_COUNT_ON_START = 5;
 const FILM_COUNT_BY_BUTTON = 5;
+
+const SortType = {
+  RATING: `rating`,
+  COMMENTS: `comments`,
+};
 
 const films = generateFilms(FILM_COUNT);
 const quantity = countFilms(films);
@@ -60,10 +65,12 @@ showMoreButton.addEventListener(`click`, (evt) => {
   }
 });
 
+const topFilms = getSortedFilms(films, SortType.RATING);
+const commentedFilms = getSortedFilms(films, SortType.COMMENTS);
 const topFilmListElement = document.querySelector(`.films-list--top .films-list__container`);
 const commentedFilmListElement = document.querySelector(`.films-list--commented .films-list__container`);
-repeatRender(topFilmListElement, films, TOP_FILM_COUNT);
-repeatRender(commentedFilmListElement, films, COMMENTED_FILM_COUNT);
+repeatRender(topFilmListElement, topFilms, TOP_FILM_COUNT);
+repeatRender(commentedFilmListElement, commentedFilms, COMMENTED_FILM_COUNT);
 
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 const filmCountInfoElement = document.createElement(`p`);
