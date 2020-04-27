@@ -21,6 +21,14 @@ const createFilmTableRowlMarkup = (row) => {
   );
 };
 
+const createDetailsControlsMarkup = (control) => {
+  const [type, name] = control;
+  return (
+    `<input type="checkbox" class="film-details__control-input visually-hidden" id="${name}" name="${name}" ${type ? `checked` : ``}>
+    <label for="${name}" class="film-details__control-label film-details__control-label--${name}">Add to ${name}</label>`
+  );
+};
+
 const createFilmDetailsTemplate = (movie) => {
   const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = movie;
 
@@ -38,6 +46,11 @@ const createFilmDetailsTemplate = (movie) => {
     [`Runtime`, durationInHours],
     [`Country`, country],
     [genreTerm, genreValue],
+  ];
+  const filmControls = [
+    [onWatchlist, `watchlist`],
+    [isWatched, `watched`],
+    [onFavorite, `favorite`],
   ];
 
   return (
@@ -75,14 +88,7 @@ const createFilmDetailsTemplate = (movie) => {
           </div>
 
           <section class="film-details__controls">
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${onWatchlist ? `checked` : ``}>
-            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
-
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
-            <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
-
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${onFavorite ? `checked` : ``}>
-            <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
+            ${filmControls.map((control) => createDetailsControlsMarkup(control)).join(`\n`)}
           </section>
         </div>
 
