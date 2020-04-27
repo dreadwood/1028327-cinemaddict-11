@@ -1,8 +1,8 @@
 import {MONTH_NAMES} from '../const.js';
 import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
-import {createElement} from '../utils/utils.js';
+import {createElement, render} from '../utils/utils.js';
 import {generationComments} from '../mock/comment.js';
-import {createCommentsTemplate} from './comments.js';
+import Comments from './comments.js';
 
 const COMMENT_COUNT = 4;
 const comments = generationComments(COMMENT_COUNT);
@@ -40,7 +40,6 @@ export default class FilmDetails {
 
     const durationInHours = getdurationInHours(duration);
     const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
-    const commentTemplate = createCommentsTemplate(comments);
     const genreTerm = genres.length === 1 ? `Genre` : `Genres`;
     const genreValue = this._createGenreTemplate(genres);
     const filmTable = [
@@ -97,9 +96,7 @@ export default class FilmDetails {
             </section>
           </div>
 
-          <div class="form-details__bottom-container">
-            ${commentTemplate}
-          </div>
+          <div class="form-details__bottom-container"></div>
         </form>
       </section>`
     );
@@ -108,6 +105,8 @@ export default class FilmDetails {
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
+      const commentContainerElement = this._element.querySelector(`.form-details__bottom-container`);
+      render(commentContainerElement, new Comments(comments).getElement());
     }
 
     return this._element;
