@@ -1,6 +1,6 @@
 import {EMOJIS} from '../const.js';
 import {getRandomArrayItem} from '../utils/utils.js';
-import {getRandomDate} from "../utils/film-utils.js";
+import {getRandomDate} from '../utils/film-utils.js';
 
 const text = [`Interesting setting and a good cast`, `Booooooooooring`, `Very very old. Meh`, `Almost two hours? Seriously?`];
 const author = [`Tim Macoveev`, `John Doe`, `John Doe`, `John Doe`];

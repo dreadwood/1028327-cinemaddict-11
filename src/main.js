@@ -8,7 +8,7 @@ import FilmDetails from './components/film-details.js';
 
 import {getRandomInteger, render} from './utils/utils.js';
 import {countFilms, getSortedFilms} from './utils/film-utils.js';
-import {generateFilms} from "./mock/film.js";
+import {generateFilms} from './mock/film.js';
 
 const FILM_COUNT = 18;
 const TOP_FILM_COUNT = 2;
