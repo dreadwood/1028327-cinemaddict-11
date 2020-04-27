@@ -1,6 +1,7 @@
 import UserProfile from './components/user-profile.js';
 import Navigation from './components/navigation.js';
 import Sorting from './components/sorting.js';
+import NoData from './components/no-data.js';
 import FilmContainer from './components/film-container.js';
 import FilmCard from './components/film-card.js';
 import ShowMoreButton from './components/show-more-button.js';
@@ -23,6 +24,7 @@ const SortType = {
 
 const films = generateFilms(FILM_COUNT);
 const quantity = countFilms(films);
+const isDataBaseEmpty = films.length === 0 ? true : false;
 let openedFilmDetails = false;
 
 const repeatRender = (container, movies, iterations) => {
@@ -80,6 +82,11 @@ const renderFilm = (place, movie) => {
 };
 
 const renderFilmList = (movies) => {
+  if (isDataBaseEmpty) {
+    render(mainElement, new NoData().getElement());
+    return;
+  }
+
   const filmContainerComponent = new FilmContainer();
   render(mainElement, filmContainerComponent.getElement());
 
@@ -130,5 +137,5 @@ renderFilmList(films);
 
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 const filmCountInfoElement = document.createElement(`p`);
-filmCountInfoElement.textContent = `${getRandomInteger(1, 130)} ${getRandomInteger(100, 999)} movies inside`;
+filmCountInfoElement.textContent = `${isDataBaseEmpty ? `` : getRandomInteger(1, 130)} ${isDataBaseEmpty ? `0` : getRandomInteger(100, 999)} movies inside`;
 footerStatisticsElement.appendChild(filmCountInfoElement);

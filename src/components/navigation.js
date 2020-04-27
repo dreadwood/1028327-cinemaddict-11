@@ -15,7 +15,7 @@ export default class Navigation {
 
   _createNavigationMarkup(navItem) {
     const [id, name] = navItem;
-    const count = this._quantity[id] ? this._quantity[id] : ``;
+    const count = this._quantity[id] ? this._quantity[id] : 0;
     return (
       `<a href="#${id}" class="main-navigation__item ${id === `all` ? `main-navigation__item--active` : ``}">
         ${name} ${id === `all` ? `` : `<span class="main-navigation__item-count">${count}</span>`}
