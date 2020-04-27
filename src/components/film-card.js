@@ -7,10 +7,10 @@ export default class FilmCard {
     this._element = null;
   }
 
-  _createFilmButtonMarkup(filmButton, isActive) {
-    const [type, name] = filmButton;
+  _createFilmButtonMarkup(filmButton) {
+    const [type, classItem, name] = filmButton;
     return (
-      `<button class="film-card__controls-item button film-card__controls-item--${type} ${isActive ? `film-card__controls-item--active` : ``}">${name}</button>`
+      `<button class="film-card__controls-item button film-card__controls-item--${classItem} ${type ? `film-card__controls-item--active` : ``}">${name}</button>`
     );
   }
 
@@ -19,6 +19,11 @@ export default class FilmCard {
 
     const year = date.getFullYear();
     const descriptionForInsertion = description.length > 140 ? (description.substring(0, 139) + `...`) : description;
+    const filmButtons = [
+      [onWatchlist, `add-to-watchlist`, `Add to watchlist`],
+      [isWatched, `mark-as-watched`, `Mark as watched`],
+      [onFavorite, `favorite`, `Mark as favorite`],
+    ];
 
     return (
       `<article class="film-card">
@@ -33,9 +38,7 @@ export default class FilmCard {
         <p class="film-card__description">${descriptionForInsertion}</p>
         <a class="film-card__comments">${comments} comments</a>
         <form class="film-card__controls">
-          ${this._createFilmButtonMarkup([`add-to-watchlist`, `Add to watchlist`], onWatchlist)}
-          ${this._createFilmButtonMarkup([`mark-as-watched`, `Mark as watched`], isWatched)}
-          ${this._createFilmButtonMarkup([`favorite`, `Mark as favorite`], onFavorite)}
+          ${filmButtons.map((button) => this._createFilmButtonMarkup(button)).join(`\n`)}
         </form>
       </article>`
     );
