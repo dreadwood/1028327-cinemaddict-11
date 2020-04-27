@@ -34,9 +34,22 @@ const repeatRender = (container, movies, iterations) => {
 const renderFilm = (place, movie) => {
   const openFilmDetails = (evt) => {
     evt.preventDefault();
+
     if (!openedFilmDetails) {
       bodyElement.appendChild(filmDetailsComponent.getElement());
       openedFilmDetails = true;
+      document.addEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      evt.preventDefault();
+      bodyElement.removeChild(filmDetailsComponent.getElement());
+      openedFilmDetails = false;
+      document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
 
@@ -48,6 +61,7 @@ const renderFilm = (place, movie) => {
     evt.preventDefault();
     bodyElement.removeChild(filmDetailsComponent.getElement());
     openedFilmDetails = false;
+    document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
   const filmComponent = new FilmCard(movie);
@@ -65,7 +79,7 @@ const renderFilm = (place, movie) => {
   render(place, filmComponent.getElement());
 };
 
-const renderFilmList = (movies) => { // add place
+const renderFilmList = (movies) => {
   const filmContainerComponent = new FilmContainer();
   render(mainElement, filmContainerComponent.getElement());
 
