@@ -1,6 +1,6 @@
 import {createElement} from '../utils/utils.js';
 
-const navItems = new Map([
+const NAV_ITEMS = new Map([
   [`all`, `All movies`],
   [`watchlist`, `Watchlist`],
   [`history`, `History`],
@@ -24,7 +24,7 @@ export default class Navigation {
   }
 
   getTemplate() {
-    const navigationMarkup = [...navItems].map((name) => this._createNavigationMarkup(name)).join(`\n`);
+    const navigationMarkup = [...NAV_ITEMS].map((name) => this._createNavigationMarkup(name)).join(`\n`);
 
     return (
       `<nav class="main-navigation">

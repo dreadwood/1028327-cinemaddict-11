@@ -1,6 +1,6 @@
 import {createElement} from '../utils/utils.js';
 
-const filmSection = new Map([
+const FILM_SECTIONS = new Map([
   [`films-list`, `All movies. Upcoming`],
   [`films-list--extra films-list--top`, `Top rated`],
   [`films-list--extra films-list--commented`, `Most commented`],
@@ -22,7 +22,7 @@ export default class FilmContainer {
   }
 
   getTemplate() {
-    const filmSectionMarkup = [...filmSection].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
+    const filmSectionMarkup = [...FILM_SECTIONS].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
 
     return (
       `<section class="films">
