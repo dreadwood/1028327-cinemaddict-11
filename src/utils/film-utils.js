@@ -19,9 +19,9 @@ const countFilms = (movies) => {
   };
 
   movies.forEach((movie) => {
-    quantity.watchlist += movie.isWatched ? 1 : 0;
+    quantity.watchlist += movie.onWatchlist ? 1 : 0;
     quantity.favorites += movie.onFavorite ? 1 : 0;
-    quantity.history += movie.onWatchlist ? 1 : 0;
+    quantity.history += movie.isWatched ? 1 : 0;
   });
 
   return quantity;

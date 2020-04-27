@@ -2,29 +2,25 @@ import {createElement} from '../utils/utils.js';
 
 const sortTypes = [`Sort by default`, `Sort by date`, `Sort by rating`];
 
-const createSortingMarkup = (type, isActive) => {
-  return (
-    `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${type}</a></li>`
-  );
-};
-
-const createSortingTemplate = () => {
-  const sortingMarkup = sortTypes.map((it, i) => createSortingMarkup(it, i === 0)).join(`\n`);
-
-  return (
-    `<ul class="sort">
-      ${sortingMarkup}
-    </ul>`
-  );
-};
-
 export default class Sorting {
   constructor() {
     this._element = null;
   }
 
+  _createSortingMarkup(type, isActive) {
+    return (
+      `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${type}</a></li>`
+    );
+  }
+
   getTemplate() {
-    return createSortingTemplate();
+    const sortingMarkup = sortTypes.map((it, i) => this._createSortingMarkup(it, i === 0)).join(`\n`);
+
+    return (
+      `<ul class="sort">
+        ${sortingMarkup}
+      </ul>`
+    );
   }
 
   getElement() {

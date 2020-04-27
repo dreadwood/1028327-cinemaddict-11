@@ -6,33 +6,29 @@ const filmSection = new Map([
   [`films-list--extra films-list--commented`, `Most commented`],
 ]);
 
-const createFilmSectionMarkup = (section, index) => {
-  const [classList, titleName] = section;
-  return (
-    `<section class="${classList}">
-      <h2 class="films-list__title ${index === 0 ? `visually-hidden` : ``}">${titleName}</h2>
-      <div class="films-list__container"></div>
-    </section>`
-  );
-};
-
-const createFilmContainerTemplate = () => {
-  const filmSectionMarkup = [...filmSection].map((section, index) => createFilmSectionMarkup(section, index)).join(`\n`);
-
-  return (
-    `<section class="films">
-      ${filmSectionMarkup}
-    </section>`
-  );
-};
-
 export default class FilmContainer {
   constructor() {
     this._element = null;
   }
 
+  _createFilmSectionMarkup(section, index) {
+    const [classList, titleName] = section;
+    return (
+      `<section class="${classList}">
+        <h2 class="films-list__title ${index === 0 ? `visually-hidden` : ``}">${titleName}</h2>
+        <div class="films-list__container"></div>
+      </section>`
+    );
+  }
+
   getTemplate() {
-    return createFilmContainerTemplate();
+    const filmSectionMarkup = [...filmSection].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
+
+    return (
+      `<section class="films">
+        ${filmSectionMarkup}
+      </section>`
+    );
   }
 
   getElement() {
