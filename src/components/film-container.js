@@ -1,20 +1,45 @@
-export const createFilmContainerTemplate = () => {
-  return (
-    `<section class="films">
-      <section class="films-list">
-        <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-        <div class="films-list__container"></div>
-      </section>
+import {createElement} from '../utils/utils.js';
 
-      <section class="films-list--extra films-list--top">
-        <h2 class="films-list__title">Top rated</h2>
-        <div class="films-list__container"></div>
-      </section>
+const filmSection = new Map([
+  [`films-list`, `All movies. Upcoming`],
+  [`films-list--extra films-list--top`, `Top rated`],
+  [`films-list--extra films-list--commented`, `Most commented`],
+]);
 
-      <section class="films-list--extra films-list--commented">
-        <h2 class="films-list__title">Most commented</h2>
+export default class FilmContainer {
+  constructor() {
+    this._element = null;
+  }
+
+  _createFilmSectionMarkup(section, index) {
+    const [classList, titleName] = section;
+    return (
+      `<section class="${classList}">
+        <h2 class="films-list__title ${index === 0 ? `visually-hidden` : ``}">${titleName}</h2>
         <div class="films-list__container"></div>
-      </section>
-    </section>`
-  );
-};
+      </section>`
+    );
+  }
+
+  getTemplate() {
+    const filmSectionMarkup = [...filmSection].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
+
+    return (
+      `<section class="films">
+        ${filmSectionMarkup}
+      </section>`
+    );
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
