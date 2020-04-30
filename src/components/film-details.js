@@ -1,16 +1,18 @@
 import {MONTH_NAMES} from '../const.js';
 import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
-import {createElement, render} from '../utils/utils.js';
 import {generationComments} from '../mock/comment.js';
 import Comments from './comments.js';
+import AbstractComponent from './abstract-component.js';
 
 const COMMENT_COUNT = 4;
 const comments = generationComments(COMMENT_COUNT);
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractComponent {
   constructor(movie) {
+    super();
+
     this._movie = movie;
-    this._element = null;
+    this._commentsComponent = new Comments(comments);
   }
 
   _createGenreTemplate(genres) {
@@ -96,23 +98,11 @@ export default class FilmDetails {
             </section>
           </div>
 
-          <div class="form-details__bottom-container"></div>
+          <div class="form-details__bottom-container">
+            ${this._commentsComponent.getTemplate()}
+          </div>
         </form>
       </section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-      const commentContainerElement = this._element.querySelector(`.form-details__bottom-container`);
-      render(commentContainerElement, new Comments(comments).getElement());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
