@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems} from '../utils/utils.js';
+import {getRandomInteger, getRandomRational, getRandomArrayItem, getArrayRandomItems} from '../utils/common.js';
 import {getRandomDate} from '../utils/film-utils.js';
 
 const FILM_TITLES = [

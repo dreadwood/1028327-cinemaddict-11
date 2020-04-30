@@ -7,7 +7,8 @@ import FilmCard from './components/film-card.js';
 import ShowMoreButton from './components/show-more-button.js';
 import FilmDetails from './components/film-details.js';
 
-import {getRandomInteger, render} from './utils/utils.js';
+import {getRandomInteger} from './utils/common.js';
+import {render, remove} from './utils/render.js';
 import {countFilms, getSortedFilms} from './utils/film-utils.js';
 import {generateFilms} from './mock/film.js';
 
@@ -78,17 +79,18 @@ const renderFilm = (place, movie) => {
   const closeButton = filmDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
   closeButton.addEventListener(`click`, onCloseButtonClick);
 
-  render(place, filmComponent.getElement());
+  render(place, filmComponent);
 };
 
 const renderFilmList = (movies) => {
   if (isDataBaseEmpty) {
-    render(mainElement, new NoData().getElement());
+    const noDataComponent = new NoData();
+    render(mainElement, noDataComponent);
     return;
   }
 
   const filmContainerComponent = new FilmContainer();
-  render(mainElement, filmContainerComponent.getElement());
+  render(mainElement, filmContainerComponent);
 
   const filmListElement = filmContainerComponent.getElement().querySelector(`.films-list`);
   const filmListContainerElement = filmListElement.querySelector(`.films-list__container`);
@@ -99,7 +101,7 @@ const renderFilmList = (movies) => {
   });
 
   const showMoreButtonComponent = new ShowMoreButton();
-  render(filmListElement, showMoreButtonComponent.getElement());
+  render(filmListElement, showMoreButtonComponent);
 
   const showMoreButton = filmListElement.querySelector(`.films-list__show-more`);
   showMoreButton.addEventListener(`click`, (evt) => {
@@ -112,8 +114,7 @@ const renderFilmList = (movies) => {
     });
 
     if (showingFilmCount >= movies.length) {
-      showMoreButtonComponent.getElement().remove();
-      showMoreButtonComponent.removeElement();
+      remove(showMoreButtonComponent);
     }
   });
 
@@ -129,9 +130,13 @@ const bodyElement = document.querySelector(`body`);
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
-render(headerElement, new UserProfile().getElement());
-render(mainElement, new Navigation(quantity).getElement());
-render(mainElement, new Sorting().getElement());
+const userProfileComponent = new UserProfile();
+const navigationComponent = new Navigation(quantity);
+const sortingComponent = new Sorting();
+
+render(headerElement, userProfileComponent);
+render(mainElement, navigationComponent);
+render(mainElement, sortingComponent);
 
 renderFilmList(films);
 
