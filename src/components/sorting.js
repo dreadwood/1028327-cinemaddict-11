@@ -1,6 +1,6 @@
 import {createElement} from '../utils/utils.js';
 
-const sortTypes = [`Sort by default`, `Sort by date`, `Sort by rating`];
+const SORT_TYPES = [`Sort by default`, `Sort by date`, `Sort by rating`];
 
 export default class Sorting {
   constructor() {
@@ -14,7 +14,7 @@ export default class Sorting {
   }
 
   getTemplate() {
-    const sortingMarkup = sortTypes.map((it, i) => this._createSortingMarkup(it, i === 0)).join(`\n`);
+    const sortingMarkup = SORT_TYPES.map((it, i) => this._createSortingMarkup(it, i === 0)).join(`\n`);
 
     return (
       `<ul class="sort">

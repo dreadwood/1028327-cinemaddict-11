@@ -327,6 +327,7 @@ button {
 
 .film-card__title,
 .film-card__rating {
+  cursor: pointer;
   display: inline;
   font-weight: 700;
 }
@@ -356,6 +357,7 @@ button {
   border: dotted 1px rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   bottom: calc(100% - 340px - 50px);
+  cursor: pointer;
   height: 340px;
   overflow: hidden;
   position: absolute;

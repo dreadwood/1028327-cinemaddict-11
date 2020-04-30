@@ -1,6 +1,6 @@
 import {createElement} from '../utils/utils.js';
 
-const navItems = new Map([
+const NAV_ITEMS = new Map([
   [`all`, `All movies`],
   [`watchlist`, `Watchlist`],
   [`history`, `History`],
@@ -15,7 +15,7 @@ export default class Navigation {
 
   _createNavigationMarkup(navItem) {
     const [id, name] = navItem;
-    const count = this._quantity[id] ? this._quantity[id] : ``;
+    const count = this._quantity[id] ? this._quantity[id] : 0;
     return (
       `<a href="#${id}" class="main-navigation__item ${id === `all` ? `main-navigation__item--active` : ``}">
         ${name} ${id === `all` ? `` : `<span class="main-navigation__item-count">${count}</span>`}
@@ -24,7 +24,7 @@ export default class Navigation {
   }
 
   getTemplate() {
-    const navigationMarkup = [...navItems].map((name) => this._createNavigationMarkup(name)).join(`\n`);
+    const navigationMarkup = [...NAV_ITEMS].map((name) => this._createNavigationMarkup(name)).join(`\n`);
 
     return (
       `<nav class="main-navigation">
