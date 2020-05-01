@@ -15,6 +15,18 @@ export default class FilmCard extends AbstractComponent {
     );
   }
 
+  setPosterClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, handler);
+  }
+
+  setTitleClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
+  }
+
+  setCommentsClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
+  }
+
   getTemplate() {
     const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = this._movie;
 

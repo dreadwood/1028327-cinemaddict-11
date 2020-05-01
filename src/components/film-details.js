@@ -37,6 +37,10 @@ export default class FilmDetails extends AbstractComponent {
     );
   }
 
+  setCloseButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+  }
+
   getTemplate() {
     const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = this._movie;
 
