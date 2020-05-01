@@ -1,4 +1,4 @@
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const NAV_ITEMS = new Map([
   [`all`, `All movies`],
@@ -7,10 +7,11 @@ const NAV_ITEMS = new Map([
   [`favorites`, `Favorites`],
 ]);
 
-export default class Navigation {
+export default class Navigation extends AbstractComponent {
   constructor(quantity) {
+    super();
+
     this._quantity = quantity;
-    this._element = null;
   }
 
   _createNavigationMarkup(navItem) {
@@ -34,17 +35,5 @@ export default class Navigation {
         <a href="#stats" class="main-navigation__additional">Stats</a>
       </nav>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

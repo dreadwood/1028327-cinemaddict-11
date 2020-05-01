@@ -1,10 +1,11 @@
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
 
-export default class FilmCard {
+export default class FilmCard extends AbstractComponent {
   constructor(movie) {
+    super();
+
     this._movie = movie;
-    this._element = null;
   }
 
   _createFilmButtonMarkup(filmButton) {
@@ -12,6 +13,18 @@ export default class FilmCard {
     return (
       `<button class="film-card__controls-item button film-card__controls-item--${classItem} ${type ? `film-card__controls-item--active` : ``}">${name}</button>`
     );
+  }
+
+  setPosterClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, handler);
+  }
+
+  setTitleClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
+  }
+
+  setCommentsClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
   }
 
   getTemplate() {
@@ -42,17 +55,5 @@ export default class FilmCard {
         </form>
       </article>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

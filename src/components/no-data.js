@@ -1,10 +1,6 @@
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class NoData {
-  constructor() {
-    this._element = null;
-  }
-
+export default class NoData extends AbstractComponent {
   getTemplate() {
     return (
       `<section class="films">
@@ -13,17 +9,5 @@ export default class NoData {
         </section>
       </section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

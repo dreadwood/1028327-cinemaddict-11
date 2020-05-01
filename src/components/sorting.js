@@ -1,12 +1,8 @@
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const SORT_TYPES = [`Sort by default`, `Sort by date`, `Sort by rating`];
 
-export default class Sorting {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Sorting extends AbstractComponent {
   _createSortingMarkup(type, isActive) {
     return (
       `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${type}</a></li>`
@@ -21,17 +17,5 @@ export default class Sorting {
         ${sortingMarkup}
       </ul>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

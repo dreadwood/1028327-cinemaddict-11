@@ -1,4 +1,4 @@
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const FILM_SECTIONS = new Map([
   [`films-list`, `All movies. Upcoming`],
@@ -6,11 +6,7 @@ const FILM_SECTIONS = new Map([
   [`films-list--extra films-list--commented`, `Most commented`],
 ]);
 
-export default class FilmContainer {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FilmContainer extends AbstractComponent {
   _createFilmSectionMarkup(section, index) {
     const [classList, titleName] = section;
     return (
@@ -29,17 +25,5 @@ export default class FilmContainer {
         ${filmSectionMarkup}
       </section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

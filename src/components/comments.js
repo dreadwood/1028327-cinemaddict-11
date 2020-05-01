@@ -1,10 +1,11 @@
 import {EMOJIS} from '../const.js';
-import {createElement} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Comments {
+export default class Comments extends AbstractComponent {
   constructor(comments) {
+    super();
+
     this._comments = comments;
-    this._element = null;
   }
 
   _createCommentMarkup(comment) {
@@ -59,17 +60,5 @@ export default class Comments {
         </div>
       </section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
