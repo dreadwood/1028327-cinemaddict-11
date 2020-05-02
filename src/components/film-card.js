@@ -8,25 +8,6 @@ export default class FilmCard extends AbstractComponent {
     this._movie = movie;
   }
 
-  _createFilmButtonMarkup(filmButton) {
-    const [type, classItem, name] = filmButton;
-    return (
-      `<button class="film-card__controls-item button film-card__controls-item--${classItem} ${type ? `film-card__controls-item--active` : ``}">${name}</button>`
-    );
-  }
-
-  setPosterClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, handler);
-  }
-
-  setTitleClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
-  }
-
-  setCommentsClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
-  }
-
   getTemplate() {
     const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = this._movie;
 
@@ -55,5 +36,24 @@ export default class FilmCard extends AbstractComponent {
         </form>
       </article>`
     );
+  }
+
+  _createFilmButtonMarkup(filmButton) {
+    const [type, classItem, name] = filmButton;
+    return (
+      `<button class="film-card__controls-item button film-card__controls-item--${classItem} ${type ? `film-card__controls-item--active` : ``}">${name}</button>`
+    );
+  }
+
+  setPosterClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, handler);
+  }
+
+  setTitleClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
+  }
+
+  setCommentsClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
   }
 }

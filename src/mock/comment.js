@@ -1,4 +1,4 @@
-import {EMOJIS} from '../const.js';
+import {EMOJIS} from '../utils/const.js';
 import {getRandomArrayItem} from '../utils/common.js';
 import {getRandomDate} from '../utils/film-utils.js';
 

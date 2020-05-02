@@ -1,4 +1,4 @@
-import {MONTH_NAMES} from '../const.js';
+import {MONTH_NAMES} from '../utils/const.js';
 import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
 import {generationComments} from '../mock/comment.js';
 import Comments from './comments.js';
@@ -13,32 +13,6 @@ export default class FilmDetails extends AbstractComponent {
 
     this._movie = movie;
     this._commentsComponent = new Comments(comments);
-  }
-
-  _createGenreTemplate(genres) {
-    return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
-  }
-
-  _createFilmTableRowlMarkup(row) {
-    const [term, value] = row;
-    return (
-      `<tr class="film-details__row">
-        <td class="film-details__term">${term}</td>
-        <td class="film-details__cell">${value}</td>
-      </tr>`
-    );
-  }
-
-  _createDetailsControlsMarkup(control) {
-    const [type, name] = control;
-    return (
-      `<input type="checkbox" class="film-details__control-input visually-hidden" id="${name}" name="${name}" ${type ? `checked` : ``}>
-      <label for="${name}" class="film-details__control-label film-details__control-label--${name}">Add to ${name}</label>`
-    );
-  }
-
-  setCloseButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
   }
 
   getTemplate() {
@@ -108,5 +82,31 @@ export default class FilmDetails extends AbstractComponent {
         </form>
       </section>`
     );
+  }
+
+  _createGenreTemplate(genres) {
+    return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
+  }
+
+  _createFilmTableRowlMarkup(row) {
+    const [term, value] = row;
+    return (
+      `<tr class="film-details__row">
+        <td class="film-details__term">${term}</td>
+        <td class="film-details__cell">${value}</td>
+      </tr>`
+    );
+  }
+
+  _createDetailsControlsMarkup(control) {
+    const [type, name] = control;
+    return (
+      `<input type="checkbox" class="film-details__control-input visually-hidden" id="${name}" name="${name}" ${type ? `checked` : ``}>
+      <label for="${name}" class="film-details__control-label film-details__control-label--${name}">Add to ${name}</label>`
+    );
+  }
+
+  setCloseButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
   }
 }
