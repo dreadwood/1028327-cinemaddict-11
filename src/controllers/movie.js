@@ -4,8 +4,9 @@ import {render} from '../utils/render.js';
 
 
 export default class MovieController {
-  constructor(container) {
+  constructor(container, onDataChange) {
     this._container = container;
+    this._onDataChange = onDataChange;
 
     this._filmComponent = null;
     this._filmDetailsComponent = null;
@@ -31,6 +32,45 @@ export default class MovieController {
     this._filmComponent.setCommentsClickHandler(onFilmCommentsClick);
 
     this._filmDetailsComponent.setCloseButtonClickHandler(this._onCloseButtonClick);
+
+
+    this._filmComponent.setWatchlistButtonClickHandler(() => { // evt.preventDefault();
+      this._onDataChange(this, movie, Object.assign({}, movie, {// move to method
+        onWatchlist: !movie.onWatchlist,
+      }));
+    });
+
+    this._filmComponent.setWatchedtButtonClickHandler(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isWatched: !movie.isWatched,
+      }));
+    });
+
+    this._filmComponent.setFavoriteButtonClickHandler(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        onFavorite: !movie.onFavorite,
+      }));
+    });
+
+
+    this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        onWatchlist: !movie.onWatchlist,
+      }));
+    });
+
+    this._filmDetailsComponent.setWatchedtButtonClickHandler(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isWatched: !movie.isWatched,
+      }));
+    });
+
+    this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        onFavorite: !movie.onFavorite,
+      }));
+    });
+
 
     render(this._container, this._filmComponent);
   }
