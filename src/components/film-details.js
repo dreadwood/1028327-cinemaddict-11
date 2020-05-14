@@ -1,18 +1,26 @@
-import {MONTH_NAMES} from '../utils/const.js';
+import {MONTH_NAMES, EMOJIS} from '../utils/const.js';
 import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
 import {generationComments} from '../mock/comment.js';
 import Comments from './comments.js';
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
 const COMMENT_COUNT = 4;
 const comments = generationComments(COMMENT_COUNT);
 
-export default class FilmDetails extends AbstractComponent {
+export default class FilmDetails extends AbstractSmartComponent {
   constructor(movie) {
     super();
 
-    this._movie = movie;
     this._commentsComponent = new Comments(comments);
+
+    this._movie = movie;
+    this._closeButtonClickHandler = null;
+    this._watchlistButtonClickHandler = null; // maybe not needed
+    this._watchedtButtonClickHandler = null; // maybe not needed
+    this._favoriteButtonClickHandler = null; // maybe not needed
+
+    this._subscribeOnEvents();
+    this._selectedEmoji = null;
   }
 
   getTemplate() {
@@ -21,7 +29,7 @@ export default class FilmDetails extends AbstractComponent {
     const durationInHours = getdurationInHours(duration);
     const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
     const genreTerm = genres.length === 1 ? `Genre` : `Genres`;
-    const genreValue = this._createGenreTemplate(genres);
+    const genreValue = this._createGenreMarkup(genres);
     const filmTable = [
       [`Director`, director],
       [`Writers`, writers],
@@ -36,6 +44,7 @@ export default class FilmDetails extends AbstractComponent {
       [isWatched, `watched`],
       [onFavorite, `favorite`],
     ];
+    const emojiListMarkup = EMOJIS.map((it) => this._createEmojiListMarkup(it, it === this._selectedEmoji)).join(`\n`);
 
     return (
       `<section class="film-details">
@@ -77,14 +86,55 @@ export default class FilmDetails extends AbstractComponent {
           </div>
 
           <div class="form-details__bottom-container">
-            ${this._commentsComponent.getTemplate()}
+            <section class="film-details__comments-wrap">
+              ${new Comments(comments).getTemplate()}
+              <div class="film-details__new-comment">
+                <div for="add-emoji" class="film-details__add-emoji-label">
+
+                </div>
+                <label class="film-details__comment-label">
+                  <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+                </label>
+                <div class="film-details__emoji-list">
+                  ${emojiListMarkup}
+                </div>
+              </div>
+            </section>
           </div>
         </form>
       </section>`
     );
   }
 
-  _createGenreTemplate(genres) {
+  recoveryListeners() {
+    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
+    this.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
+    this.setWatchedtButtonClickHandler(this._watchedtButtonClickHandler);
+    this.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
+    this._subscribeOnEvents(); // CHANGE NAME
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+
+
+    element.querySelector(`.film-details__emoji-list`).addEventListener(`click`, (evt) => {
+      if (evt.target.tagName === `INPUT`) {
+        this._selectedEmoji = evt.target.value;
+        const emojiContainer = element.querySelector(`.film-details__add-emoji-label`);
+
+        emojiContainer.innerHTML = `<img src="./images/emoji/${this._selectedEmoji}.png" width="55" height="55" alt="emoji-${this._selectedEmoji}">`;
+
+        this.rerender();
+      }
+    });
+  }
+
+  _createGenreMarkup(genres) {
     return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(`\n`);
   }
 
@@ -98,6 +148,15 @@ export default class FilmDetails extends AbstractComponent {
     );
   }
 
+  _createEmojiListMarkup(emoji, isActive) {
+    return (
+      `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}" ${isActive ? `checked` : ``}>
+      <label class="film-details__emoji-label" for="emoji-${emoji}">
+        <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
+      </label>`
+    );
+  }
+
   _createDetailsControlsMarkup(control) {
     const [type, name] = control;
     return (
@@ -108,17 +167,25 @@ export default class FilmDetails extends AbstractComponent {
 
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+
+    this._closeButtonClickHandler = handler;
   }
 
   setWatchlistButtonClickHandler(handler) {
     this.getElement().querySelector(`#watchlist`).addEventListener(`click`, handler);
+
+    this._watchlistButtonClickHandler = handler;
   }
 
   setWatchedtButtonClickHandler(handler) {
     this.getElement().querySelector(`#watched`).addEventListener(`click`, handler);
+
+    this._watchedtButtonClickHandler = handler;
   }
 
   setFavoriteButtonClickHandler(handler) {
     this.getElement().querySelector(`#favorite`).addEventListener(`click`, handler);
+
+    this._favoriteButtonClickHandler = handler;
   }
 }

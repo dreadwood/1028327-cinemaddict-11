@@ -70,7 +70,7 @@ export default class PageController {
     this._repeatRender(this._commentedFilmListElement, commentedFilms, COMMENTED_FILM_COUNT); // change on renderFilms
   }
 
-  _repeatRender(container, movies, iterations) { // change on renderFilms
+  _repeatRender(container, movies, iterations) { // change on renderFilms + add onDataChange
     const movieController = new MovieController(container);
     for (let i = 0; i < iterations; i++) {
       movieController.render(movies[i]);

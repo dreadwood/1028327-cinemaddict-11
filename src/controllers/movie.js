@@ -34,19 +34,22 @@ export default class MovieController {
     this._filmDetailsComponent.setCloseButtonClickHandler(this._onCloseButtonClick);
 
 
-    this._filmComponent.setWatchlistButtonClickHandler(() => { // evt.preventDefault();
-      this._onDataChange(this, movie, Object.assign({}, movie, {// move to method
+    this._filmComponent.setWatchlistButtonClickHandler((evt) => {
+      evt.preventDefault();
+      this._onDataChange(this, movie, Object.assign({}, movie, { // move to method
         onWatchlist: !movie.onWatchlist,
       }));
     });
 
-    this._filmComponent.setWatchedtButtonClickHandler(() => {
+    this._filmComponent.setWatchedtButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._onDataChange(this, movie, Object.assign({}, movie, {
         isWatched: !movie.isWatched,
       }));
     });
 
-    this._filmComponent.setFavoriteButtonClickHandler(() => {
+    this._filmComponent.setFavoriteButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._onDataChange(this, movie, Object.assign({}, movie, {
         onFavorite: !movie.onFavorite,
       }));
