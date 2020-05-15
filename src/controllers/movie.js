@@ -1,37 +1,44 @@
 import FilmCard from '../components/film-card.js';
 import FilmDetails from '../components/film-details.js';
-import {render} from '../utils/render.js';
+import {render, replace} from '../utils/render.js';
 
+const Mode = {
+  DEFAULT: `default`,
+  DETAILS: `details`,
+};
 
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
+    this._mode = Mode.DEFAULT;
 
     this._filmComponent = null;
     this._filmDetailsComponent = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
-    this._onCloseButtonClick = this._onCloseButtonClick.bind(this);
+    this._closeFilmDetails = this._closeFilmDetails.bind(this);
 
     this._bodyElement = document.querySelector(`body`);
-
-    this._openedFilmDetails = false;
   }
 
   render(movie) {
+    const oldFilmComponent = this._filmComponent;
+    const oldFilmDetailsComponent = this._filmDetailsComponent;
+
     this._filmComponent = new FilmCard(movie);
     this._filmDetailsComponent = new FilmDetails(movie);
 
-    const onFilmPosterClick = (evt) => this._openFilmDetails(evt);
-    const onFilmTitleClick = (evt) => this._openFilmDetails(evt);
-    const onFilmCommentsClick = (evt) => this._openFilmDetails(evt);
+    const onFilmPosterClick = () => this._openFilmDetails();
+    const onFilmTitleClick = () => this._openFilmDetails();
+    const onFilmCommentsClick = () => this._openFilmDetails();
 
     this._filmComponent.setPosterClickHandler(onFilmPosterClick);
     this._filmComponent.setTitleClickHandler(onFilmTitleClick);
     this._filmComponent.setCommentsClickHandler(onFilmCommentsClick);
 
-    this._filmDetailsComponent.setCloseButtonClickHandler(this._onCloseButtonClick);
+    this._filmDetailsComponent.setCloseButtonClickHandler(this._closeFilmDetails);
 
 
     this._filmComponent.setWatchlistButtonClickHandler((evt) => {
@@ -74,27 +81,32 @@ export default class MovieController {
       }));
     });
 
-
-    render(this._container, this._filmComponent);
-  }
-
-  _openFilmDetails(evt) {
-    evt.preventDefault();
-
-    if (!this._openedFilmDetails) {
-      this._bodyElement.appendChild(this._filmDetailsComponent.getElement());
-      this._openedFilmDetails = true;
-      document.addEventListener(`keydown`, this._onEscKeyDown);
+    if (oldFilmDetailsComponent && oldFilmComponent) {
+      replace(this._filmComponent, oldFilmComponent);
+      replace(this._filmDetailsComponent, oldFilmDetailsComponent);
+    } else {
+      render(this._container, this._filmComponent);
     }
   }
 
-  _onCloseButtonClick(evt) {
-    evt.preventDefault();
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._closeFilmDetails();
+    }
+  }
 
-    this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
-    this._openedFilmDetails = false;
+  _openFilmDetails() {
+    this._onViewChange();
+    this._bodyElement.appendChild(this._filmDetailsComponent.getElement());
+    document.addEventListener(`keydown`, this._onEscKeyDown);
+    this._mode = Mode.DETAILS;
+  }
+
+  _closeFilmDetails() {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-
+    this._filmDetailsComponent.reset();
+    this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
+    this._mode = Mode.DEFAULT;
   }
 
   _onEscKeyDown(evt) {
@@ -103,9 +115,7 @@ export default class MovieController {
     if (isEscKey) {
       evt.preventDefault();
 
-      this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
-      this._openedFilmDetails = false;
-      document.removeEventListener(`keydown`, this._onEscKeyDown);
+      this._closeFilmDetails(evt);
     }
   }
 }

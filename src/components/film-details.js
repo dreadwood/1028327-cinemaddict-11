@@ -15,9 +15,9 @@ export default class FilmDetails extends AbstractSmartComponent {
 
     this._movie = movie;
     this._closeButtonClickHandler = null;
-    this._watchlistButtonClickHandler = null; // maybe not needed
-    this._watchedtButtonClickHandler = null; // maybe not needed
-    this._favoriteButtonClickHandler = null; // maybe not needed
+    this._watchlistButtonClickHandler = null;
+    this._watchedtButtonClickHandler = null;
+    this._favoriteButtonClickHandler = null;
 
     this._subscribeOnEvents();
     this._selectedEmoji = null;
@@ -91,6 +91,8 @@ export default class FilmDetails extends AbstractSmartComponent {
               <div class="film-details__new-comment">
                 <div for="add-emoji" class="film-details__add-emoji-label">
 
+                  ${this._selectedEmoji ? `<img src="./images/emoji/${this._selectedEmoji}.png" width="55" height="55" alt="emoji-${this._selectedEmoji}">` : ``}
+
                 </div>
                 <label class="film-details__comment-label">
                   <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -118,16 +120,16 @@ export default class FilmDetails extends AbstractSmartComponent {
     super.rerender();
   }
 
+  reset() {
+    this._selectedEmoji = null;
+  }
+
   _subscribeOnEvents() {
     const element = this.getElement();
 
-
     element.querySelector(`.film-details__emoji-list`).addEventListener(`click`, (evt) => {
-      if (evt.target.tagName === `INPUT`) {
+      if (evt.target.tagName === `INPUT` && this._selectedEmoji !== evt.target.value) {
         this._selectedEmoji = evt.target.value;
-        const emojiContainer = element.querySelector(`.film-details__add-emoji-label`);
-
-        emojiContainer.innerHTML = `<img src="./images/emoji/${this._selectedEmoji}.png" width="55" height="55" alt="emoji-${this._selectedEmoji}">`;
 
         this.rerender();
       }
