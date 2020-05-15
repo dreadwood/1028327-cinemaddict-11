@@ -67,15 +67,8 @@ export default class PageController {
     const topFilms = getSortedFilms(movies, FilmListType.RATING);
     const commentedFilms = getSortedFilms(movies, FilmListType.COMMENTS);
 
-    this._repeatRender(this._topFilmListElement, topFilms, TOP_FILM_COUNT); // change on renderFilms
-    this._repeatRender(this._commentedFilmListElement, commentedFilms, COMMENTED_FILM_COUNT); // change on renderFilms
-  }
-
-  _repeatRender(container, movies, iterations) { // change on renderFilms + add onDataChange
-    const movieController = new MovieController(container);
-    for (let i = 0; i < iterations; i++) {
-      movieController.render(movies[i]);
-    }
+    this._renderFilms(this._topFilmListElement, topFilms.slice(0, TOP_FILM_COUNT, this._onDataChange, this._onViewChange));
+    this._renderFilms(this._commentedFilmListElement, commentedFilms.slice(0, COMMENTED_FILM_COUNT, this._onDataChange, this._onViewChange));
   }
 
   _renderFilms(container, movies, onDataChange, onViewChange) {

@@ -113,7 +113,7 @@ export default class FilmDetails extends AbstractSmartComponent {
     this.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
     this.setWatchedtButtonClickHandler(this._watchedtButtonClickHandler);
     this.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
-    this._subscribeOnEvents(); // CHANGE NAME
+    this._subscribeOnEvents();
   }
 
   rerender() {

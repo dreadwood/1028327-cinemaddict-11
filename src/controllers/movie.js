@@ -43,7 +43,7 @@ export default class MovieController {
 
     this._filmComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, movie, Object.assign({}, movie, { // move to method
+      this._onDataChange(this, movie, Object.assign({}, movie, {// move to method
         onWatchlist: !movie.onWatchlist,
       }));
     });
