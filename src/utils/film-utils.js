@@ -2,28 +2,28 @@ import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
 momentDurationFormatSetup(moment);
 
-const getRatingForInsertion = (rating) => rating % 1 ? rating : rating + `.0`;
+export const getRatingForInsertion = (rating) => rating % 1 ? rating : rating + `.0`;
 
-const getDurationFilm = (duration) => {
+export const getDurationFilm = (duration) => {
   return moment.duration(duration, `minutes`).format(`h[h] m[m]`);
 };
 
-const getReleaseDate = (date) => {
+export const getReleaseDate = (date) => {
   return moment(date).format(`DD MMMM YYYY`);
 };
 
-const getDateComment = (date) => {
+export const getDateComment = (date) => {
   return moment(date).fromNow();
 };
 
-const getRandomDate = (minYear, maxYear) => {
+export const getRandomDate = (minYear, maxYear) => {
   const start = new Date(minYear, 0);
   const end = new Date(maxYear, 0);
 
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
-const countFilms = (movies) => {
+export const countFilms = (movies) => {
   const quantity = {
     history: 0,
     favorites: 0,
@@ -39,6 +39,4 @@ const countFilms = (movies) => {
   return quantity;
 };
 
-const getSortedFilms = (movies, sortType) => movies.slice().sort((a, b) => b[sortType] - a[sortType]);
-
-export {getRatingForInsertion, getDurationFilm, getRandomDate, countFilms, getSortedFilms, getReleaseDate, getDateComment};
+export const getSortedFilms = (movies, sortType) => movies.slice().sort((a, b) => b[sortType] - a[sortType]);
