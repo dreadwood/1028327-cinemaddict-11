@@ -1,4 +1,6 @@
 import AbstractComponent from './abstract-component.js';
+import {getDateComment} from '../utils/film-utils.js';
+
 
 export default class Comments extends AbstractComponent {
   constructor(comments) {
@@ -21,7 +23,8 @@ export default class Comments extends AbstractComponent {
 
   _createCommentMarkup(comment) {
     const {emoji, text, author, date} = comment;
-    const dateComment = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : `0` + date.getMinutes()}`;
+
+    const dateComment = getDateComment(date);
 
     return (
       `<li class="film-details__comment">

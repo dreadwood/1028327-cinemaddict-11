@@ -1,4 +1,5 @@
-const path = require('path');
+const MomentLocalesPlugin = require(`moment-locales-webpack-plugin`);
+const path = require(`path`);
 
 module.exports = {
   mode: 'development', // режим сборки
@@ -13,4 +14,7 @@ module.exports = {
     open: 'Google Chrome',
     watchContentBase: true, // автоматическая перезагрузка страницы
   },
+  plugins: [
+    new MomentLocalesPlugin()
+  ],
 }
