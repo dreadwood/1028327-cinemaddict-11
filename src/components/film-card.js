@@ -1,5 +1,5 @@
 import AbstractComponent from './abstract-component.js';
-import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
+import {getRatingForInsertion, getDurationFilm} from '../utils/film-utils.js';
 
 export default class FilmCard extends AbstractComponent {
   constructor(movie) {
@@ -25,7 +25,7 @@ export default class FilmCard extends AbstractComponent {
         <p class="film-card__rating">${getRatingForInsertion(rating)}</p>
         <p class="film-card__info">
           <span class="film-card__year">${year}</span>
-          <span class="film-card__duration">${getdurationInHours(duration)}</span>
+          <span class="film-card__duration">${getDurationFilm(duration)}</span>
           <span class="film-card__genre">${genres[0]}</span>
         </p>
         <img src="./images/posters/${poster}" alt="film poster ${title}" class="film-card__poster">

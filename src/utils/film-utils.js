@@ -1,8 +1,20 @@
+import moment from 'moment';
+import momentDurationFormatSetup from 'moment-duration-format';
+momentDurationFormatSetup(moment);
+
 const getRatingForInsertion = (rating) => rating % 1 ? rating : rating + `.0`;
 
-const getdurationInHours = (duration) => `${duration > 60
-  ? Math.floor(duration / 60) + `h `
-  : ``}${duration % 60}m`;
+const getDurationFilm = (duration) => {
+  return moment.duration(duration, `minutes`).format(`h[h] m[m]`);
+};
+
+const getReleaseDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
+};
+
+const getDateComment = (date) => {
+  return moment(date).fromNow();
+};
 
 const getRandomDate = (minYear, maxYear) => {
   const start = new Date(minYear, 0);
@@ -29,4 +41,4 @@ const countFilms = (movies) => {
 
 const getSortedFilms = (movies, sortType) => movies.slice().sort((a, b) => b[sortType] - a[sortType]);
 
-export {getRatingForInsertion, getdurationInHours, getRandomDate, countFilms, getSortedFilms};
+export {getRatingForInsertion, getDurationFilm, getRandomDate, countFilms, getSortedFilms, getReleaseDate, getDateComment};

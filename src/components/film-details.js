@@ -1,5 +1,5 @@
-import {MONTH_NAMES, EMOJIS} from '../utils/const.js';
-import {getRatingForInsertion, getdurationInHours} from '../utils/film-utils.js';
+import {EMOJIS} from '../utils/const.js';
+import {getRatingForInsertion, getDurationFilm, getReleaseDate} from '../utils/film-utils.js';
 import {generationComments} from '../mock/comment.js';
 import Comments from './comments.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
@@ -26,8 +26,8 @@ export default class FilmDetails extends AbstractSmartComponent {
   getTemplate() {
     const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite} = this._movie;
 
-    const durationInHours = getdurationInHours(duration);
-    const releaseDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+    const releaseDate = getReleaseDate(date);
+    const durationFilm = getDurationFilm(duration);
     const genreTerm = genres.length === 1 ? `Genre` : `Genres`;
     const genreValue = this._createGenreMarkup(genres);
     const filmTable = [
@@ -35,7 +35,7 @@ export default class FilmDetails extends AbstractSmartComponent {
       [`Writers`, writers],
       [`Actors`, actors],
       [`Release Date`, releaseDate],
-      [`Runtime`, durationInHours],
+      [`Runtime`, durationFilm],
       [`Country`, country],
       [genreTerm, genreValue],
     ];
