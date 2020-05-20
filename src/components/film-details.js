@@ -122,6 +122,8 @@ export default class FilmDetails extends AbstractSmartComponent {
 
   reset() {
     this._selectedEmoji = null;
+
+    this.rerender();
   }
 
   _subscribeOnEvents() {

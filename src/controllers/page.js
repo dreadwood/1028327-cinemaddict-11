@@ -128,7 +128,7 @@ export default class PageController {
 
     this._filmListContainerElement.innerHTML = ``;
 
-    const newMovies = this._renderFilms(this._filmListContainerElement, sortedMovies, this._onDataChange, this._showingFilmCount);
+    const newMovies = this._renderFilms(this._filmListContainerElement, sortedMovies, this._onDataChange, this._onViewChange);
     this._showedMovieControllers = newMovies;
 
     this._renderShowMoreButton();
