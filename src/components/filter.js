@@ -1,13 +1,13 @@
 import AbstractComponent from './abstract-component.js';
 
-const NAV_ITEMS = new Map([
+const FILTER_ITEMS = new Map([
   [`all`, `All movies`],
   [`watchlist`, `Watchlist`],
   [`history`, `History`],
   [`favorites`, `Favorites`],
 ]);
 
-export default class Navigation extends AbstractComponent {
+export default class Filter extends AbstractComponent {
   constructor(quantity) {
     super();
 
@@ -15,12 +15,12 @@ export default class Navigation extends AbstractComponent {
   }
 
   getTemplate() {
-    const navigationMarkup = [...NAV_ITEMS].map((name) => this._createNavigationMarkup(name)).join(`\n`);
+    const filterMarkup = [...FILTER_ITEMS].map((name) => this._createNavigationMarkup(name)).join(`\n`);
 
     return (
       `<nav class="main-navigation">
         <div class="main-navigation__items">
-          ${navigationMarkup}
+          ${filterMarkup}
         </div>
         <a href="#stats" class="main-navigation__additional">Stats</a>
       </nav>`

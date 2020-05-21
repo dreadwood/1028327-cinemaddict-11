@@ -1,4 +1,4 @@
-import Navigation from '../components/navigation.js';
+import Filter from '../components/filter.js';
 import NoData from '../components/no-data.js';
 import Sorting, {SortTypes} from '../components/sorting.js';
 import FilmContainer from '../components/film-container.js';
@@ -56,8 +56,8 @@ export default class PageController {
     const movies = this._moviesModel.getMovies();
 
     const quantity = countFilms(movies);
-    const navigationComponent = new Navigation(quantity);
-    render(this._container, navigationComponent);
+    const filterComponent = new Filter(quantity);
+    render(this._container, filterComponent);
     render(this._container, this._sortingComponent);
 
     const isDataBaseEmpty = movies.length === 0 ? true : false;
