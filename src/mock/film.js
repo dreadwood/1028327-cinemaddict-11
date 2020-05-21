@@ -59,6 +59,7 @@ const generationFilm = () => {
   const movie = getRandomArrayItem(FILM_TITLES);
 
   return {
+    id: String(new Date() + Math.random()),
     title: movie.localName,
     originTitle: movie.originName,
     country: getRandomArrayItem(CountryItems),

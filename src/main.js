@@ -1,5 +1,6 @@
 import UserProfile from './components/user-profile.js';
 import PageController from './controllers/page.js';
+import MoviesModel from './models/movies-model.js';
 import {getRandomInteger} from './utils/common.js';
 import {render} from './utils/render.js';
 import {generateFilms} from './mock/film.js';
@@ -15,7 +16,10 @@ const mainElement = document.querySelector(`.main`);
 const userProfileComponent = new UserProfile();
 render(headerElement, userProfileComponent);
 
-const pageController = new PageController(mainElement);
+const moviesModel = new MoviesModel();
+moviesModel.setMovies(films);
+
+const pageController = new PageController(mainElement, moviesModel);
 pageController.render(films);
 
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);

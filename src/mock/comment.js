@@ -7,6 +7,7 @@ const author = [`Tim Macoveev`, `John Doe`, `John Doe`, `John Doe`];
 
 const generationComment = () => {
   return {
+    id: String(new Date() + Math.random()),
     emoji: getRandomArrayItem(EMOJIS),
     text: getRandomArrayItem(text),
     author: getRandomArrayItem(author),
