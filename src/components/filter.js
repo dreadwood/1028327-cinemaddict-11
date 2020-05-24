@@ -1,12 +1,10 @@
-import AbstractSmartComponent from './abstract-smart-component.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Filter extends AbstractSmartComponent {
+export default class Filter extends AbstractComponent {
   constructor(filter) {
     super();
 
     this._filter = filter;
-
-    this._filterChangeHandler = null;
   }
 
   getTemplate() {
@@ -20,14 +18,6 @@ export default class Filter extends AbstractSmartComponent {
         <a href="#stats" class="main-navigation__additional">Stats</a>
       </nav>`
     );
-  }
-
-  rerender() {
-    super.rerender();
-  }
-
-  recoveryListeners() {
-    this.setFilterChangeHandler(this._filterChangeHandler);
   }
 
   _createNavigationMarkup(filter, isChecked) {
@@ -49,10 +39,7 @@ export default class Filter extends AbstractSmartComponent {
         const filterName = evt.target.id;
         handler(filterName);
 
-        this.rerender();
       }
     });
-
-    this._filterChangeHandler = handler;
   }
 }
