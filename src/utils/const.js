@@ -14,3 +14,10 @@ export const MONTH_NAMES = [
 ];
 
 export const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
+
+export const FilterType = {
+  ALL: `All movies`,
+  WATCHLIST: `Watchlist`,
+  HISTORY: `History`,
+  FAVORITES: `Favorites`,
+};

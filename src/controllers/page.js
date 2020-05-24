@@ -1,11 +1,10 @@
-import Filter from '../components/filter.js';
 import NoData from '../components/no-data.js';
 import Sorting, {SortTypes} from '../components/sorting.js';
 import FilmContainer from '../components/film-container.js';
 import ShowMoreButton from '../components/show-more-button.js';
 import MovieController from './movie.js';
 import {render, remove} from '../utils/render.js';
-import {getSortedFilms, countFilms} from '../utils/film-utils.js';
+import {getSortedFilms} from '../utils/film-utils.js';
 
 const TOP_FILM_COUNT = 2;
 const COMMENTED_FILM_COUNT = 2;
@@ -48,16 +47,15 @@ export default class PageController {
     this._onDataChange = this._onDataChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._onFilterChange = this._onFilterChange.bind(this);
 
     this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+    this._moviesModel.setFilterChangeHandler(this._onFilterChange);
   }
 
   render() {
     const movies = this._moviesModel.getMovies();
 
-    const quantity = countFilms(movies);
-    const filterComponent = new Filter(quantity);
-    render(this._container, filterComponent);
     render(this._container, this._sortingComponent);
 
     const isDataBaseEmpty = movies.length === 0 ? true : false;
@@ -76,6 +74,11 @@ export default class PageController {
 
     renderFilms(this._topFilmListElement, topFilms.slice(0, TOP_FILM_COUNT, this._onDataChange, this._onViewChange)); // change on _renderFilms or let it go?
     renderFilms(this._commentedFilmListElement, commentedFilms.slice(0, COMMENTED_FILM_COUNT, this._onDataChange, this._onViewChange));
+  }
+
+  _removeFilms() {
+    this._showedMovieControllers.forEach((movieController) => movieController.destroy());
+    this._showedMovieControllers = [];
   }
 
   _renderFilms(movies) {
@@ -125,6 +128,12 @@ export default class PageController {
     });
   }
 
+  _updateFilms(count) {
+    this._removeFilms();
+    this._renderFilms(this._moviesModel.getMovies().slice(0, count));
+    this._renderShowMoreButton();
+  }
+
   _onSortTypeChange(sortType) {
     const movies = this._moviesModel.getMovies();
     this._showingFilmCount = FILM_COUNT_ON_START;
@@ -139,8 +148,12 @@ export default class PageController {
     this._renderShowMoreButton();
   }
 
+  _onFilterChange() {
+    this._updateFilms(FILM_COUNT_ON_START);
+  }
+
   _onDataChange(movieController, oldData, newData) {
-    const isSuccess = this._moviesModel.updateTask(oldData.id, newData);
+    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
 
     if (isSuccess) {
       movieController.render(newData);

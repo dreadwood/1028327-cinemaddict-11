@@ -1,21 +1,16 @@
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
-const FILTER_ITEMS = new Map([
-  [`all`, `All movies`],
-  [`watchlist`, `Watchlist`],
-  [`history`, `History`],
-  [`favorites`, `Favorites`],
-]);
-
-export default class Filter extends AbstractComponent {
-  constructor(quantity) {
+export default class Filter extends AbstractSmartComponent {
+  constructor(filter) {
     super();
 
-    this._quantity = quantity;
+    this._filter = filter;
+
+    this._filterChangeHandler = null;
   }
 
   getTemplate() {
-    const filterMarkup = [...FILTER_ITEMS].map((name) => this._createNavigationMarkup(name)).join(`\n`);
+    const filterMarkup = this._filter.map((it) => this._createNavigationMarkup(it, it.checked)).join(`\n`);
 
     return (
       `<nav class="main-navigation">
@@ -27,13 +22,37 @@ export default class Filter extends AbstractComponent {
     );
   }
 
-  _createNavigationMarkup(navItem) {
-    const [id, name] = navItem;
-    const count = this._quantity[id] ? this._quantity[id] : 0;
+  rerender() {
+    super.rerender();
+  }
+
+  recoveryListeners() {
+    this.setFilterChangeHandler(this._filterChangeHandler);
+  }
+
+  _createNavigationMarkup(filter, isChecked) {
+    const {name, count} = filter;
+    const href = name.split(` `, 1)[0].toLowerCase();
+
     return (
-      `<a href="#${id}" class="main-navigation__item ${id === `all` ? `main-navigation__item--active` : ``}">
-        ${name} ${id === `all` ? `` : `<span class="main-navigation__item-count">${count}</span>`}
+      `<a href="#${href}" id="${name}" class="main-navigation__item ${isChecked ? `main-navigation__item--active` : ``}">
+        ${name} ${href === `all` ? `` : `<span class="main-navigation__item-count">${count}</span>`}
       </a>\n`
     );
+  }
+
+  setFilterChangeHandler(handler) {
+    const filterList = this.getElement().querySelector(`.main-navigation__items`);
+    filterList.addEventListener(`click`, (evt) => {
+      if (evt.target.tagName === `A`) {
+        evt.preventDefault();
+        const filterName = evt.target.id;
+        handler(filterName);
+
+        this.rerender();
+      }
+    });
+
+    this._filterChangeHandler = handler;
   }
 }

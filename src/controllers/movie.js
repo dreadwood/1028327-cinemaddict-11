@@ -1,6 +1,6 @@
 import FilmCard from '../components/film-card.js';
 import FilmDetails from '../components/film-details.js';
-import {render, replace} from '../utils/render.js';
+import {render, replace, remove} from '../utils/render.js';
 
 const Mode = {
   DEFAULT: `default`,
@@ -93,6 +93,12 @@ export default class MovieController {
     if (this._mode !== Mode.DEFAULT) {
       this._closeFilmDetails();
     }
+  }
+
+  destroy() {
+    remove(this._filmDetailsComponent);
+    remove(this._filmComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _openFilmDetails() {

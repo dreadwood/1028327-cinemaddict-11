@@ -1,5 +1,6 @@
 import UserProfile from './components/user-profile.js';
 import PageController from './controllers/page.js';
+import FilterController from './controllers/filter.js';
 import MoviesModel from './models/movies-model.js';
 import {getRandomInteger} from './utils/common.js';
 import {render} from './utils/render.js';
@@ -20,6 +21,8 @@ const moviesModel = new MoviesModel();
 moviesModel.setMovies(films);
 
 const pageController = new PageController(mainElement, moviesModel);
+const filterController = new FilterController(mainElement, moviesModel);
+filterController.render();
 pageController.render(films);
 
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
