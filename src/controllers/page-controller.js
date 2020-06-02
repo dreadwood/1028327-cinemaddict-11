@@ -2,7 +2,7 @@ import NoData from '../components/no-data.js';
 import Sorting, {SortTypes} from '../components/sorting.js';
 import FilmContainer from '../components/film-container.js';
 import ShowMoreButton from '../components/show-more-button.js';
-import MovieController from './movie.js';
+import MovieController from './movie-controller.js';
 import {render, remove} from '../utils/render.js';
 import {getSortedFilms} from '../utils/film-utils.js';
 
