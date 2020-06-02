@@ -2,6 +2,7 @@ import {EMOJIS} from '../utils/const.js';
 import {getRatingForInsertion, getDurationFilm, getReleaseDate} from '../utils/film-utils.js';
 import Comments from './comments.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
+import {encode} from "he";
 
 const StyleBoxShadow = {
   ERROR: `0 0 14px 2px red`,
@@ -114,7 +115,7 @@ export default class FilmDetails extends AbstractSmartComponent {
 
     return {
       emoji: this._selectedEmoji,
-      text: comment,
+      text: encode(comment),
       author: `author`,
       date: new Date(),
     };
