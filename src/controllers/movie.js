@@ -16,9 +16,11 @@ export default class MovieController {
 
     this._filmComponent = null;
     this._filmDetailsComponent = null;
+    this._film = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._closeFilmDetails = this._closeFilmDetails.bind(this);
+    this._onSubmitAddComment = this._onSubmitAddComment.bind(this);
 
     this._bodyElement = document.querySelector(`body`);
   }
@@ -26,6 +28,7 @@ export default class MovieController {
   render(movie) {
     const oldFilmComponent = this._filmComponent;
     const oldFilmDetailsComponent = this._filmDetailsComponent;
+    this._film = movie;
 
     this._filmComponent = new FilmCard(movie);
     this._filmDetailsComponent = new FilmDetails(movie);
@@ -37,9 +40,6 @@ export default class MovieController {
     this._filmComponent.setPosterClickHandler(onFilmPosterClick);
     this._filmComponent.setTitleClickHandler(onFilmTitleClick);
     this._filmComponent.setCommentsClickHandler(onFilmCommentsClick);
-
-    this._filmDetailsComponent.setCloseButtonClickHandler(this._closeFilmDetails);
-
 
     this._filmComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
@@ -62,6 +62,8 @@ export default class MovieController {
       }));
     });
 
+    // TODO: change handler for closeButton on onCloseButtonClick
+    this._filmDetailsComponent.setCloseButtonClickHandler(this._closeFilmDetails);
 
     this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
@@ -78,6 +80,16 @@ export default class MovieController {
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         onFavorite: !movie.onFavorite,
+      }));
+    });
+
+    this._filmDetailsComponent.setSmileButtonClickHandler();
+
+    this._filmDetailsComponent.setDeleteButtonClickHandler((index) => {
+      const updateComments = [].concat(movie.comments.slice(0, index), movie.comments.slice(index + 1));
+
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        comments: updateComments,
       }));
     });
 
@@ -99,17 +111,20 @@ export default class MovieController {
     remove(this._filmDetailsComponent);
     remove(this._filmComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    document.removeEventListener(`keydown`, this._onSubmitAddComment);
   }
 
   _openFilmDetails() {
     this._onViewChange();
     this._bodyElement.appendChild(this._filmDetailsComponent.getElement());
     document.addEventListener(`keydown`, this._onEscKeyDown);
+    document.addEventListener(`keydown`, this._onSubmitAddComment);
     this._mode = Mode.DETAILS;
   }
 
   _closeFilmDetails() {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    document.removeEventListener(`keydown`, this._onSubmitAddComment);
     this._filmDetailsComponent.reset();
     this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
     this._mode = Mode.DEFAULT;
@@ -122,6 +137,20 @@ export default class MovieController {
       evt.preventDefault();
 
       this._closeFilmDetails(evt);
+    }
+  }
+
+  _onSubmitAddComment(evt) {
+    if (evt.key === `Enter` && (evt.ctrlKey || evt.metaKey)) {
+      if (!this._filmDetailsComponent.checkComment()) {
+        return;
+      }
+
+      const newComment = this._film.comments.concat(this._filmDetailsComponent.getComment());
+
+      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+        comments: newComment
+      }));
     }
   }
 }

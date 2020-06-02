@@ -38,7 +38,6 @@ export default class Filter extends AbstractComponent {
         evt.preventDefault();
         const filterName = evt.target.id;
         handler(filterName);
-
       }
     });
   }

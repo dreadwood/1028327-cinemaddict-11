@@ -7,7 +7,6 @@ const author = [`Tim Macoveev`, `John Doe`, `John Doe`, `John Doe`];
 
 const generationComment = () => {
   return {
-    id: String(new Date() + Math.random()),
     emoji: getRandomArrayItem(EMOJIS),
     text: getRandomArrayItem(text),
     author: getRandomArrayItem(author),
@@ -21,4 +20,14 @@ const generationComments = (count) => {
     .map(generationComment);
 };
 
-export {generationComments};
+const generationMovieComments = (count, movies) => {
+  return movies.reduce((acc, movie) => {
+    acc.push({
+      id: movie.id,
+      comments: generationComments(count),
+    });
+    return acc;
+  }, []);
+};
+
+export {generationMovieComments};

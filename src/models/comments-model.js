@@ -2,7 +2,7 @@ export default class CommentsModel {
   constructor() {
     this._comments = [];
 
-    this._dataChangeHandlers = [];
+    this._dataChangeHandlers = []; // TODO: It is necessary?
   }
 
   getComments() {
@@ -11,28 +11,41 @@ export default class CommentsModel {
 
   setComments(comments) {
     this._comments = Array.from(comments);
-    this._callHandlers(this._dataChangeHandlers);
+    this._callHandlers(this._dataChangeHandlers); // TODO: It is necessary?
   }
 
-  updateComment(id, comment) {
-    const index = this._comment.findIndex((it) => it.id === id);
+  getFilmComment(id) {
+    const index = this._comments.findIndex((it) => it.id === id);
 
     if (index === -1) {
       return false;
     }
 
-    this._comments = [].concat(this._comments.slice(0, index), comment, this._comments.slice(index + 1));
+    return this._comments[index].comments;
+  }
 
-    this._callHandlers(this._dataChangeHandlers);
+  removeComment(id, indexComment) {
+    const index = this._comments.findIndex((it) => it.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    this._comments = this._comments[index].comments.splice(indexComment, 1);
 
     return true;
   }
 
-  setDataChangeHandler(handler) {
+  addComment(сomment) {
+    this._comments = [].concat(сomment, this._comments);
+    this._callHandlers(this._dataChangeHandlers);
+  }
+
+  setDataChangeHandler(handler) { // TODO: It is necessary?
     this._dataChangeHandlers.push(handler);
   }
 
-  _callHandlers(handlers) {
+  _callHandlers(handlers) { // TODO: It is necessary?
     handlers.forEach((handler) => handler());
   }
 }

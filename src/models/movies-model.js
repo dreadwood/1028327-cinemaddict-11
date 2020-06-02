@@ -2,10 +2,12 @@ import {getFilmsByFilter} from '../utils/filter.js';
 import {FilterType} from '../utils/const.js';
 
 export default class MoviesModel {
-  constructor() {
-    this._movies = [];
+  constructor(commentsModel) {
+    this._commentsModel = commentsModel;
+
     this._activeFilterType = FilterType.ALL;
 
+    this._movies = [];
     this._dataChangeHandlers = [];
     this._filterChangeHandlers = [];
   }
@@ -26,6 +28,12 @@ export default class MoviesModel {
   setFilter(filterType) {
     this._activeFilterType = filterType;
     this._callHandlers(this._filterChangeHandlers);
+  }
+
+  setCommentsMovies() {
+    this._movies.forEach((movie) => {
+      movie.comments = this._commentsModel.getFilmComment(movie.id);
+    });
   }
 
   updateMovie(id, movie) {

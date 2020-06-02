@@ -26,9 +26,10 @@ const renderFilms = (container, movies, onDataChange, onViewChange) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, commentsModel) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._commentsModel = commentsModel;
 
     this._showedMovieControllers = [];
     this._showingFilmCount = FILM_COUNT_ON_START;
@@ -73,8 +74,8 @@ export default class PageController {
     const topFilms = getSortedFilms(movies, FilmListType.RATING);
     const commentedFilms = getSortedFilms(movies, FilmListType.COMMENTS);
 
-    renderFilms(this._topFilmListElement, topFilms.slice(0, TOP_FILM_COUNT, this._onDataChange, this._onViewChange)); // change on _renderFilms or let it go?
-    renderFilms(this._commentedFilmListElement, commentedFilms.slice(0, COMMENTED_FILM_COUNT, this._onDataChange, this._onViewChange));
+    renderFilms(this._topFilmListElement, topFilms.slice(0, TOP_FILM_COUNT), this._onDataChange, this._onViewChange); // change on _getSortedMovies or let it go?
+    renderFilms(this._commentedFilmListElement, commentedFilms.slice(0, COMMENTED_FILM_COUNT), this._onDataChange, this._onViewChange);
   }
 
   _removeFilms() {
