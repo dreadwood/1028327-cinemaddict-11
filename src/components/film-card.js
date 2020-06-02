@@ -30,7 +30,7 @@ export default class FilmCard extends AbstractComponent {
         </p>
         <img src="./images/posters/${poster}" alt="film poster ${title}" class="film-card__poster">
         <p class="film-card__description">${descriptionForInsertion}</p>
-        <a class="film-card__comments">${comments} comments</a>
+        <a class="film-card__comments">${comments.length} comments</a>
         <form class="film-card__controls">
           ${filmButtons.map((button) => this._createFilmButtonMarkup(button)).join(`\n`)}
         </form>

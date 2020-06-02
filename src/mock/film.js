@@ -59,6 +59,7 @@ const generationFilm = () => {
   const movie = getRandomArrayItem(FILM_TITLES);
 
   return {
+    id: String(new Date() + Math.random()),
     title: movie.localName,
     originTitle: movie.originName,
     country: getRandomArrayItem(CountryItems),
@@ -75,7 +76,7 @@ const generationFilm = () => {
     onWatchlist: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     onFavorite: Math.random() > 0.5,
-    comments: getRandomInteger(0, 99),
+    comments: [],
   };
 };
 

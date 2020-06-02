@@ -20,4 +20,14 @@ const generationComments = (count) => {
     .map(generationComment);
 };
 
-export {generationComments};
+const generationMovieComments = (count, movies) => {
+  return movies.reduce((acc, movie) => {
+    acc.push({
+      id: movie.id,
+      comments: generationComments(count),
+    });
+    return acc;
+  }, []);
+};
+
+export {generationMovieComments};

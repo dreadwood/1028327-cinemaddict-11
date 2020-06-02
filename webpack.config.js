@@ -11,7 +11,6 @@ module.exports = {
   devtool: 'source-map',
   devServer: { // настройки сервера
     contentBase: path.join(__dirname, 'public'),
-    open: 'Google Chrome',
     watchContentBase: true, // автоматическая перезагрузка страницы
   },
   plugins: [
