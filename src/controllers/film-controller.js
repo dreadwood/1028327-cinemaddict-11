@@ -7,7 +7,7 @@ const Mode = {
   DETAILS: `details`,
 };
 
-export default class MovieController {
+export default class FilmController {
   constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
@@ -25,13 +25,13 @@ export default class MovieController {
     this._bodyElement = document.querySelector(`body`);
   }
 
-  render(movie) {
+  render(film) {
     const oldFilmComponent = this._filmComponent;
     const oldFilmDetailsComponent = this._filmDetailsComponent;
-    this._film = movie;
+    this._film = film;
 
-    this._filmComponent = new FilmCard(movie);
-    this._filmDetailsComponent = new FilmDetails(movie);
+    this._filmComponent = new FilmCard(film);
+    this._filmDetailsComponent = new FilmDetails(film);
 
     const onFilmPosterClick = () => this._openFilmDetails();
     const onFilmTitleClick = () => this._openFilmDetails();
@@ -43,22 +43,22 @@ export default class MovieController {
 
     this._filmComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, movie, Object.assign({}, movie, {// move to method
-        onWatchlist: !movie.onWatchlist,
+      this._onDataChange(this, film, Object.assign({}, film, {// move to method
+        onWatchlist: !film.onWatchlist,
       }));
     });
 
     this._filmComponent.setWatchedtButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isWatched: !movie.isWatched,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        isWatched: !film.isWatched,
       }));
     });
 
     this._filmComponent.setFavoriteButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        onFavorite: !movie.onFavorite,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        onFavorite: !film.onFavorite,
       }));
     });
 
@@ -66,29 +66,29 @@ export default class MovieController {
     this._filmDetailsComponent.setCloseButtonClickHandler(this._closeFilmDetails);
 
     this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        onWatchlist: !movie.onWatchlist,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        onWatchlist: !film.onWatchlist,
       }));
     });
 
     this._filmDetailsComponent.setWatchedtButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isWatched: !movie.isWatched,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        isWatched: !film.isWatched,
       }));
     });
 
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        onFavorite: !movie.onFavorite,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        onFavorite: !film.onFavorite,
       }));
     });
 
     this._filmDetailsComponent.setSmileButtonClickHandler();
 
     this._filmDetailsComponent.setDeleteButtonClickHandler((index) => {
-      const updateComments = [].concat(movie.comments.slice(0, index), movie.comments.slice(index + 1));
+      const updateComments = [].concat(film.comments.slice(0, index), film.comments.slice(index + 1));
 
-      this._onDataChange(this, movie, Object.assign({}, movie, {
+      this._onDataChange(this, film, Object.assign({}, film, {
         comments: updateComments,
       }));
     });

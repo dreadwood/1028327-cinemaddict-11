@@ -23,20 +23,20 @@ export const getRandomDate = (minYear, maxYear) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
-export const countFilms = (movies) => {
+export const countFilms = (films) => {
   const quantity = {
     history: 0,
     favorites: 0,
     watchlist: 0,
   };
 
-  movies.forEach((movie) => {
-    quantity.watchlist += movie.onWatchlist ? 1 : 0;
-    quantity.favorites += movie.onFavorite ? 1 : 0;
-    quantity.history += movie.isWatched ? 1 : 0;
+  films.forEach((film) => {
+    quantity.watchlist += film.onWatchlist ? 1 : 0;
+    quantity.favorites += film.onFavorite ? 1 : 0;
+    quantity.history += film.isWatched ? 1 : 0;
   });
 
   return quantity;
 };
 
-export const getSortedFilms = (movies, sortType) => movies.slice().sort((a, b) => b[sortType] - a[sortType]);
+export const getSortedFilms = (films, sortType) => films.slice().sort((a, b) => b[sortType] - a[sortType]);

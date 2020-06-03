@@ -56,12 +56,12 @@ const getDescription = (text) => {
 };
 
 const generationFilm = () => {
-  const movie = getRandomArrayItem(FILM_TITLES);
+  const film = getRandomArrayItem(FILM_TITLES);
 
   return {
     id: String(new Date() + Math.random()),
-    title: movie.localName,
-    originTitle: movie.originName,
+    title: film.localName,
+    originTitle: film.originName,
     country: getRandomArrayItem(CountryItems),
     rating: getRandomRational(1, 10),
     contentRating: getRandomArrayItem(ContentRatingItems),

@@ -1,27 +1,27 @@
-import {getFilmsByFilter} from '../utils/filter.js';
+import {getFilmsByFilter} from '../utils/filter-utils.js';
 import {FilterType} from '../utils/const.js';
 
-export default class MoviesModel {
+export default class FilmsModel {
   constructor(commentsModel) {
     this._commentsModel = commentsModel;
 
     this._activeFilterType = FilterType.ALL;
 
-    this._movies = [];
+    this._films = [];
     this._dataChangeHandlers = [];
     this._filterChangeHandlers = [];
   }
 
-  getMovies() {
-    return getFilmsByFilter(this._movies, this._activeFilterType);
+  getFilms() {
+    return getFilmsByFilter(this._films, this._activeFilterType);
   }
 
-  getMoviesAll() {
-    return this._movies;
+  getFilmsAll() {
+    return this._films;
   }
 
-  setMovies(movies) {
-    this._movies = Array.from(movies);
+  setFilms(films) {
+    this._films = Array.from(films);
     this._callHandlers(this._dataChangeHandlers);
   }
 
@@ -30,20 +30,20 @@ export default class MoviesModel {
     this._callHandlers(this._filterChangeHandlers);
   }
 
-  setCommentsMovies() {
-    this._movies.forEach((movie) => {
-      movie.comments = this._commentsModel.getFilmComment(movie.id);
+  setCommentsFilms() {
+    this._films.forEach((film) => {
+      film.comments = this._commentsModel.getFilmComment(film.id);
     });
   }
 
-  updateMovie(id, movie) {
-    const index = this._movies.findIndex((it) => it.id === id);
+  updateFilm(id, film) {
+    const index = this._films.findIndex((it) => it.id === id);
 
     if (index === -1) {
       return false;
     }
 
-    this._movies = [].concat(this._movies.slice(0, index), movie, this._movies.slice(index + 1));
+    this._films = [].concat(this._films.slice(0, index), film, this._films.slice(index + 1));
 
     this._callHandlers(this._dataChangeHandlers);
 

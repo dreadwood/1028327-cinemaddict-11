@@ -1,7 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 import {getDateComment} from '../utils/film-utils.js';
 
-
 export default class Comments extends AbstractComponent {
   constructor(comments) {
     super();
