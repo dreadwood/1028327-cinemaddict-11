@@ -17,16 +17,16 @@ const COMMENTS_COUNT = 4;
 const films = generateFilms(FILM_COUNT);
 const comments = generationFilmComments(COMMENTS_COUNT, films);
 
-const userProfileComponent = new UserProfile();
-const footerStatisticsComponent = new FooterStatistics(films.length);
-render(headerElement, userProfileComponent);
-render(footerElement, footerStatisticsComponent);
-
 const commentsModel = new CommentsModel();
 const filmsModel = new FilmsModel(commentsModel);
 filmsModel.setFilms(films);
 commentsModel.setComments(comments);
 filmsModel.setCommentsFilms();
+
+const userProfileComponent = new UserProfile(filmsModel.getWatchedFilms());
+const footerStatisticsComponent = new FooterStatistics(films.length);
+render(headerElement, userProfileComponent);
+render(footerElement, footerStatisticsComponent);
 
 const pageController = new PageController(mainElement, filmsModel, commentsModel);
 const filterController = new FilterController(mainElement, filmsModel, pageController);

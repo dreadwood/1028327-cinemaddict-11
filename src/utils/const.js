@@ -21,3 +21,9 @@ export const FilterType = {
   HISTORY: `History`,
   FAVORITES: `Favorites`,
 };
+
+export const UserRangs = {
+  NOVICE: `Novice`,
+  FAN: `Fan`,
+  EXPERT: `Movie Buff`,
+};

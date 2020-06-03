@@ -1,3 +1,4 @@
+import {UserRangs} from './const.js';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
 momentDurationFormatSetup(moment);
@@ -37,6 +38,19 @@ export const countFilms = (films) => {
   });
 
   return quantity;
+};
+
+export const getRang = (quantityFilms) => {
+  switch (true) {
+    case (quantityFilms > 20):
+      return UserRangs.EXPERT;
+    case (quantityFilms > 10):
+      return UserRangs.FAN;
+    case (quantityFilms > 0):
+      return UserRangs.NOVICE;
+    default:
+      return ``;
+  }
 };
 
 export const getSortedFilms = (films, sortType) => films.slice().sort((a, b) => b[sortType] - a[sortType]);

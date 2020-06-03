@@ -1,15 +1,11 @@
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {getRandomArrayItem} from '../utils/common.js';
+import {getRang} from '../utils/film-utils.js';
+
 import Chart from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const BAR_HEIGHT = 50;
-
-const UserRangs = {
-  NOVICE: `Novice`,
-  FAN: `Fan`,
-  EXPERT: `Movie Buff`,
-};
 
 const FilterType = new Map([
   [`statistic-all-time`, 0],
@@ -18,19 +14,6 @@ const FilterType = new Map([
   [`statistic-month`, 31],
   [`statistic-year`, 365],
 ]);
-
-const getRang = (countFilms) => { // вынести в общие функции
-  switch (true) {
-    case (countFilms > 20):
-      return UserRangs.EXPERT;
-    case (countFilms > 10):
-      return UserRangs.FAN;
-    case (countFilms > 0):
-      return UserRangs.NOVICE;
-    default:
-      return ``;
-  }
-};
 
 const countWatchedGenres = (watchedFilms) => {
   const watchedGenres = watchedFilms.length ? watchedFilms.slice().map((film) => film.genres).reduce((a, b) => [...a, ...b]) : [];

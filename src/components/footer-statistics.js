@@ -1,21 +1,21 @@
 import AbstractComponent from './abstract-component.js';
 
 export default class FooterStatistics extends AbstractComponent {
-  constructor(amount) {
+  constructor(quantityFilms) {
     super();
 
-    this._amount = amount;
+    this._quantityFilms = quantityFilms;
   }
 
   getTemplate() {
     return (
       `<section class="footer__statistics">
-        <p>${this._amount} movies inside</p>
+        <p>${this._quantityFilms} movies inside</p>
       </section>`
     );
   }
 
-  updateCounter(amount) {
-    this.getElement().querySelector(`.counter`).textContent = amount;
+  updateCounter(quantityFilms) {
+    this.getElement().querySelector(`.counter`).textContent = quantityFilms;
   }
 }
