@@ -28,7 +28,7 @@ commentsModel.setComments(comments);
 filmsModel.setCommentsFilms();
 
 const pageController = new PageController(mainElement, filmsModel, commentsModel);
-const filterController = new FilterController(mainElement, filmsModel);
+const filterController = new FilterController(mainElement, filmsModel, pageController);
 filterController.render();
 pageController.render(films);
 

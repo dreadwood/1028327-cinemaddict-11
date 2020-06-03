@@ -76,6 +76,7 @@ const generationFilm = () => {
     onWatchlist: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     onFavorite: Math.random() > 0.5,
+    watchingDate: new Date(Date.now() - getRandomRational(60000, 6500000000)),
     comments: [],
   };
 };

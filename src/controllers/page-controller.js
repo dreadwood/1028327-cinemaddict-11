@@ -2,6 +2,7 @@ import NoData from '../components/no-data.js';
 import Sorting, {SortTypes} from '../components/sorting.js';
 import FilmContainer from '../components/film-container.js';
 import ShowMoreButton from '../components/show-more-button.js';
+import Statistics from '../components/statistics.js';
 import FilmController from './film-controller.js';
 import {render, remove} from '../utils/render.js';
 import {getSortedFilms} from '../utils/film-utils.js';
@@ -39,6 +40,7 @@ export default class PageController {
     this._filmContainerComponent = new FilmContainer();
     this._showMoreButtonComponent = new ShowMoreButton();
     this._sortingComponent = new Sorting();
+    this._statisticComponent = new Statistics(this._filmsModel);
 
     this._filmListElement = this._filmContainerComponent.getElement().querySelector(`.films-list`);
     this._filmListContainerElement = this._filmListElement.querySelector(`.films-list__container`);
@@ -55,16 +57,34 @@ export default class PageController {
     this._filmsModel.setFilterChangeHandler(this._onFilterChange);
   }
 
+  showStats() {
+    this._filmContainerComponent.hide();
+    this._sortingComponent.hide();
+    this._statisticComponent.show();
+  }
+
+  hideStats() {
+    this._filmContainerComponent.show();
+    this._sortingComponent.show();
+    this._statisticComponent.hide();
+  }
+
+  _renderStats() { // переместить вниз
+    render(this._container, this._statisticComponent);
+    this._statisticComponent.hide();
+  }
+
   render() {
     const films = this._filmsModel.getFilms();
 
     render(this._container, this._sortingComponent);
 
-    const isDataBaseEmpty = films.length === 0 ? true : false;
-    if (isDataBaseEmpty) {
+    if (films.length === 0) {
       render(this._container, this._noDataComponent);
       return;
     }
+
+    this._renderStats();
 
     render(this._container, this._filmContainerComponent);
     this._renderFilms(films.slice(0, this._showingFilmCount));
