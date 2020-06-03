@@ -1,12 +1,15 @@
 import Filter from '../components/filter.js';
 import {render, replace} from '../utils/render.js';
 import {FilterType} from '../utils/const.js';
-import {getFilmsByFilter} from '../utils/filter.js';
+import {getFilmsByFilter} from '../utils/filter-utils.js';
+
+const BUTTON_STATS = `stats`;
 
 export default class FilterController {
-  constructor(container, moviesModel) {
+  constructor(container, filmsModel, pageController) {
     this._container = container;
-    this._moviesModel = moviesModel;
+    this._filmsModel = filmsModel;
+    this._pageController = pageController;
 
     this._activeFilterType = FilterType.ALL;
     this._filterComponent = null;
@@ -14,11 +17,11 @@ export default class FilterController {
     this._onDataChange = this._onDataChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
 
-    this._moviesModel.setDataChangeHandler(this._onDataChange);
+    this._filmsModel.setDataChangeHandler(this._onDataChange);
   }
 
   render() {
-    const allFilms = this._moviesModel.getMoviesAll();
+    const allFilms = this._filmsModel.getFilmsAll();
     const filters = Object.values(FilterType).map((filterType) => {
       return {
         name: filterType,
@@ -40,10 +43,13 @@ export default class FilterController {
   }
 
   _onFilterChange(filterType) {
-    this._moviesModel.setFilter(filterType);
-    this._activeFilterType = filterType;
-
-    this._onDataChange();
+    if (filterType === BUTTON_STATS) {
+      this._pageController.showStats();
+    } else {
+      this._pageController.hideStats();
+      this._filmsModel.setFilter(filterType);
+      this._activeFilterType = filterType;
+    }
   }
 
   _onDataChange() {

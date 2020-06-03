@@ -1,5 +1,7 @@
 import AbstractComponent from './abstract-component.js';
 
+const ACTIVE_CLASS = `main-navigation__item--active`;
+
 export default class Filter extends AbstractComponent {
   constructor(filter) {
     super();
@@ -15,7 +17,7 @@ export default class Filter extends AbstractComponent {
         <div class="main-navigation__items">
           ${filterMarkup}
         </div>
-        <a href="#stats" class="main-navigation__additional">Stats</a>
+        <a href="#stats" id="stats" class="main-navigation__additional">Stats</a>
       </nav>`
     );
   }
@@ -31,13 +33,23 @@ export default class Filter extends AbstractComponent {
     );
   }
 
+  _setActiveButton(activeButton) {
+    const buttons = this.getElement().querySelectorAll(`a`);
+    buttons.forEach((button) => {
+      button.classList.remove(ACTIVE_CLASS);
+    });
+
+    activeButton.classList.add(ACTIVE_CLASS);
+  }
+
   setFilterChangeHandler(handler) {
-    const filterList = this.getElement().querySelector(`.main-navigation__items`);
-    filterList.addEventListener(`click`, (evt) => {
+    this.getElement().addEventListener(`click`, (evt) => {
       if (evt.target.tagName === `A`) {
         evt.preventDefault();
-        const filterName = evt.target.id;
-        handler(filterName);
+
+        const activeButton = evt.target;
+        this._setActiveButton(activeButton);
+        handler(activeButton.id);
       }
     });
   }

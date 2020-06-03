@@ -56,12 +56,12 @@ const getDescription = (text) => {
 };
 
 const generationFilm = () => {
-  const movie = getRandomArrayItem(FILM_TITLES);
+  const film = getRandomArrayItem(FILM_TITLES);
 
   return {
     id: String(new Date() + Math.random()),
-    title: movie.localName,
-    originTitle: movie.originName,
+    title: film.localName,
+    originTitle: film.originName,
     country: getRandomArrayItem(CountryItems),
     rating: getRandomRational(1, 10),
     contentRating: getRandomArrayItem(ContentRatingItems),
@@ -76,6 +76,7 @@ const generationFilm = () => {
     onWatchlist: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     onFavorite: Math.random() > 0.5,
+    watchingDate: new Date(Date.now() - getRandomRational(60000, 6500000000)),
     comments: [],
   };
 };

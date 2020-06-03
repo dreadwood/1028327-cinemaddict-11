@@ -1,7 +1,7 @@
+import AbstractSmartComponent from './abstract-smart-component.js';
 import {EMOJIS} from '../utils/const.js';
 import {getRatingForInsertion, getDurationFilm, getReleaseDate} from '../utils/film-utils.js';
 import Comments from './comments.js';
-import AbstractSmartComponent from './abstract-smart-component.js';
 import {encode} from "he";
 
 const StyleBoxShadow = {
@@ -10,10 +10,10 @@ const StyleBoxShadow = {
 };
 
 export default class FilmDetails extends AbstractSmartComponent {
-  constructor(movie) {
+  constructor(film) {
     super();
 
-    this._movie = movie;
+    this._film = film;
 
     this._closeButtonClickHandler = null;
     this._watchlistButtonClickHandler = null;
@@ -25,7 +25,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite, comments} = this._movie;
+    const {poster, contentRating, title, originTitle, rating, director, writers, actors, date, duration, country, genres, description, onWatchlist, isWatched, onFavorite, comments} = this._film;
 
     const releaseDate = getReleaseDate(date);
     const durationFilm = getDurationFilm(duration);

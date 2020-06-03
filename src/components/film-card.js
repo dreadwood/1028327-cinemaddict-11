@@ -2,14 +2,14 @@ import AbstractComponent from './abstract-component.js';
 import {getRatingForInsertion, getDurationFilm} from '../utils/film-utils.js';
 
 export default class FilmCard extends AbstractComponent {
-  constructor(movie) {
+  constructor(film) {
     super();
 
-    this._movie = movie;
+    this._film = film;
   }
 
   getTemplate() {
-    const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = this._movie;
+    const {title, rating, date, duration, genres, poster, description, onWatchlist, isWatched, onFavorite, comments} = this._film;
 
     const year = date.getFullYear();
     const descriptionForInsertion = description.length > 140 ? (description.substring(0, 139) + `...`) : description;

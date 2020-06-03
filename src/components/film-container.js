@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 
-const FILM_SECTIONS = new Map([
+const FilmSections = new Map([
   [`films-list`, `All movies. Upcoming`],
   [`films-list--extra films-list--top`, `Top rated`],
   [`films-list--extra films-list--commented`, `Most commented`],
@@ -8,7 +8,7 @@ const FILM_SECTIONS = new Map([
 
 export default class FilmContainer extends AbstractComponent {
   getTemplate() {
-    const filmSectionMarkup = [...FILM_SECTIONS].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
+    const filmSectionMarkup = [...FilmSections].map((section, index) => this._createFilmSectionMarkup(section, index)).join(`\n`);
 
     return (
       `<section class="films">
